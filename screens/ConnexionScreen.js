@@ -3,10 +3,13 @@ import { View, Text, Button, TextInput } from "react-native";
 import Header from "../components/Header";
 import styles from "../Styles/styles";
 import { useUser } from "../components/UserConnexion";
+import { compare } from "react-native-bcrypt";
 
 export default () => {
   [email, setEmail] = useState("");
   [mdp, setMdp] = useState("");
+  [message, setMessage] = useState("");
+  const [chargement, setChargement] = useState(false);
   const { user, updateUser } = useUser();
 
   const verifyUser = async () => {
@@ -26,14 +29,26 @@ export default () => {
   };
 
   const verifyUserDev = async () => {
+    setChargement(true);
+
     const data = await fetch(
-      "https://s4-8060.nuage-peda.fr/ShareMelanie/Share/public/api-connectuser?email=melanie.boudry@ecoles-epsi.net&mdp=nejz"
+      "https://s4-8060.nuage-peda.fr/ShareMelanie/Share/public/api-connectuser?email=melanie.boudry@ecoles-epsi.net&mdp=123456789"
     );
     const dataJSON = await data.json();
 
     console.log(dataJSON);
+    setMessage(dataJSON.message);
 
-    if (dataJSON.state == "success") updateUser(JSON.parse(dataJSON.data));
+    if (dataJSON.state == "success") {
+      const userTemp = JSON.parse(dataJSON.data);
+
+      // const isPasswordOK = await compare(userTemp.password, "123456789");
+      // if (await isPasswordOK) updateUser(userTemp);
+
+      updateUser(userTemp);
+    }
+
+    setChargement(false);
   };
 
   return (
@@ -68,6 +83,9 @@ export default () => {
             verifyUserDev();
           }}
         />
+
+        {chargement && <Text>Chargement...</Text>}
+        <Text>{message}</Text>
       </View>
     </View>
   );
