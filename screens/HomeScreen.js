@@ -1,15 +1,35 @@
-import { useState } from "react"
-import { View, Text } from "react-native"
+import { useState } from "react";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import styles from "../Styles/styles";
+import Header from "../components/Header";
 
-export default ()=> {
-    [variable, setVariable] = useState(0)
+export default () => {
+  [variable, setVariable] = useState(0);
 
-
-
-    return (
-        <View>
-            <Text>Coucouu HOME</Text>
-            <Text>{variable}</Text>
-        </View>
-    )
-}
+  return (
+    <View style={styles.body}>
+      <Header />
+      <View style={styles.container}>
+        <Text style={styles.titre}>Accueil</Text>
+        <Text style={styles.description}>
+          Une application mobile révolutionnaire conçue pour{" "}
+          <Text style={[styles.gras, styles.italic]}>simplifier le partage</Text> de fichiers
+          entre utilisateurs Android.
+        </Text>
+        <Image
+          style={styles.image}
+          source={require("../assets/imageAccueil.jpg")}
+        />
+        <Text style={styles.description}>
+          Avec une interface conviviale et des fonctionnalités avancées, "Share"
+          vise à faciliter{" "}
+          <Text style={[styles.gras, styles.italic]}>l'échange de données numériques</Text> de
+          manière sécurisée et efficace.
+        </Text>
+        <TouchableOpacity style={styles.bouton}>
+          <Text style={styles.texteBouton}>Partager</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
