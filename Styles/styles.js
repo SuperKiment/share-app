@@ -4,9 +4,11 @@ const styles = StyleSheet.create({
   body: {
     backgroundColor: 'white',
     flex: 1,
+    marginTop: 20,
   },
   container: {
-    margin: 15,    
+    margin: 15, 
+    flex: 1,   
   },
   blueContainer: {
     margin: 15, 
@@ -17,7 +19,6 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   header: {
-    marginTop: 22,
     backgroundColor: '#158CBA',
     paddingVertical: 10,
     alignItems: 'center',
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#158CBA',
     padding: 16,
     borderRadius: 25,
-    marginTop: 30,
+    marginTop: 40,
   },
   texteBouton: {
     color: 'white',
@@ -111,6 +112,44 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     marginRight: 3, 
     tintColor: 'white',
+  },
+  gridView: {
+    marginTop: 20,
+    flex: 1,
+  },
+  itemContainer: {
+    justifyContent: "flex-end",
+    borderRadius: 5,
+    padding: 10,
+    height: 150,
+  },
+  itemName: {
+    fontSize: 16,
+    color: "#fff",
+    fontWeight: "600",
+  },
+  itemCode: {
+    fontWeight: "600",
+    fontSize: 12,
+    color: "#fff",
+  },
+  view: {
+    marginTop: 20,
+    marginBotton: 20,
+  },
+  h2Text: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginVertical: 10,
+  },
+  h3Text: {
+    fontWeight: "bold",
+    marginVertical: 10,
+  },
+  text: {
+    textAlign: "justify",
+    marginTop: 5,
+    lineHeight: 25,
   },
 });
 

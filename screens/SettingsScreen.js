@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import Header from "../components/Header";
+import styles from "../Styles/styles";
 
 export default () => {
   [variable, setVariable] = useState(0);
@@ -19,7 +20,7 @@ export default () => {
   });
 
   return (
-    <View>
+    <View style={styles.body}>
       <Header />
       <Text>Coucouu Hello</Text>
       <Text>{variable.test}</Text>

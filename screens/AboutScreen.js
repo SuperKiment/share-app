@@ -1,6 +1,8 @@
 import React from "react";
 import { View, Text, StyleSheet, Dimensions, SafeAreaView } from "react-native";
 import { FlatGrid } from "react-native-super-grid";
+import styles from "../Styles/styles";
+import Header from "../components/Header";
 
 export default () => {
   const createurs = [
@@ -8,87 +10,60 @@ export default () => {
       id: 1,
       title: "Mélanie BOUDRY",
       role: "Etudiante",
-      backgroundColor: "red",
+      backgroundColor: "#F05C5C",
     },
     {
       id: 2,
       title: "Agathe POTEAUX",
       role: "Etudiante",
-      backgroundColor: "green",
+      backgroundColor: "#87C48A",
     },
     {
       id: 3,
       title: "Antoine BRUYE",
       role: "Etudiant",
-      backgroundColor: "blue",
+      backgroundColor: "#7A93EE",
     },
     {
       id: 4,
       title: "Clément PARISOT",
       role: "Etudiant",
-      backgroundColor: "yellow",
+      backgroundColor: "#EEEC7A",
     },
   ];
 
-  const itemDimension = (Dimensions.get("window").width - 40) / 2 - 20;
+  const itemDimension = (Dimensions.get("window").width - 100) / 2 - 20;
 
   return (
-    <SafeAreaView style={styles.safeAreaView}>
-      <Text style={styles.headerText}>Les créateurs</Text>
-      <Text>
-        Nous sommes tous élèves de deuxième année BTS SIO option SLAM.
-      </Text>
-      <FlatGrid
-        itemDimension={itemDimension}
-        data={createurs}
-        style={styles.gridView}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item, index }) => (
-          <View
-            style={[
-              styles.itemContainer,
-              { backgroundColor: item.backgroundColor },
-            ]}
-          >
-            <Text style={styles.itemName}>{item.title}</Text>
-            <Text style={styles.itemCode}>{item.role}</Text>
-          </View>
-        )}
-      />
-    </SafeAreaView>
+    <View style={styles.body}>
+      <Header />
+      <View style={styles.container}>
+        <Text style={styles.titre}>Les créateurs</Text>
+        <Text style={styles.description}>
+          Nous sommes tous élèves de deuxième année BTS SIO option SLAM. Ce
+          projet rentre dans le cadre de notre Epreuve E5 de BTS SIO (option
+          SLAM).
+        </Text>
+        {
+          <FlatGrid
+            itemDimension={itemDimension}
+            data={createurs}
+            style={styles.gridView}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item, index }) => (
+              <View
+                style={[
+                  styles.itemContainer,
+                  { backgroundColor: item.backgroundColor },
+                ]}
+              >
+                <Text style={styles.itemName}>{item.title}</Text>
+                <Text style={styles.itemCode}>{item.role}</Text>
+              </View>
+            )}
+          />
+        }
+      </View>
+    </View>
   );
 };
-
-const styles = StyleSheet.create({
-  safeAreaView: {
-    flex: 1,
-    margin: 20,
-  },
-  gridView: {
-    marginTop: 20,
-    flex: 1,
-  },
-  itemContainer: {
-    justifyContent: "flex-end",
-    borderRadius: 5,
-    padding: 10,
-    height: 150,
-  },
-  itemName: {
-    fontSize: 16,
-    color: "#fff",
-    fontWeight: "600",
-  },
-  itemCode: {
-    fontWeight: "600",
-    fontSize: 12,
-    color: "#fff",
-  },
-  headerText: {
-    fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginVertical: 10,
-    marginBottom: 20,
-  },
-});

@@ -37,22 +37,6 @@ export default function MyTabs() {
           }}
         />
         <Tab.Screen
-          name="Profil"
-          component={ProfilScreen}
-          options={{
-            tabBarLabel: "Profil",
-            tabBarIcon: ({ color, size }) => (
-              <Image
-                source={{
-                  uri: "https://cdn.icon-icons.com/icons2/1747/PNG/512/profile_113589.png",
-                }}
-                style={{ width: size, height: size, tintColor: "white" }}
-              />
-            ),
-            headerShown: false,
-          }}
-        />
-        <Tab.Screen
           name="Paramètres"
           component={SettingsScreen}
           options={{
@@ -68,6 +52,23 @@ export default function MyTabs() {
             headerShown: false,
           }}
         />
+        <Tab.Screen
+          name="Profil"
+          component={ProfilScreen}
+          options={{
+            tabBarLabel: "Profil",
+            tabBarIcon: ({ color, size }) => (
+              <Image
+                source={{
+                  uri: "https://cdn.icon-icons.com/icons2/1747/PNG/512/profile_113589.png",
+                }}
+                style={{ width: size, height: size, tintColor: "white" }}
+              />
+            ),
+            headerShown: false,
+          }}
+        />
+        
       </Tab.Navigator>
     </NavigationContainer>
   );
