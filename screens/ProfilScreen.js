@@ -1,5 +1,12 @@
 import { useContext, useState } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity, Button } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Button,
+} from "react-native";
 import styles from "../Styles/styles";
 import Header from "../components/Header";
 import MentionsLegales from "./MentionsLegalesScreen";
@@ -12,9 +19,9 @@ export default ({ navigation }) => {
 
   console.log(user);
 
-  const deconnexion = ()=> {
+  const deconnexion = () => {
     updateUser(null);
-  }
+  };
 
   return (
     <View style={styles.body}>
@@ -22,10 +29,12 @@ export default ({ navigation }) => {
       <View style={styles.blueContainer}>
         <View style={styles.ecart}>
           <Text style={styles.blueTitre}>Profil</Text>
-          <Button title="Déconnexion" onPress={deconnexion}/>
+          <TouchableOpacity onPress={deconnexion} style={styles.bouton}>
+            <Text style={styles.texteBouton}>kys</Text>
+          </TouchableOpacity>
 
           <Text style={styles.ProfilTexte}>
-            <Text style={styles.gras}>Nom : {user.lastname}</Text> 
+            <Text style={styles.gras}>Nom : {user.lastname}</Text>
           </Text>
           <Text style={styles.ProfilTexte}>
             <Text style={styles.gras}>Prénom :</Text> {user.firstname}
