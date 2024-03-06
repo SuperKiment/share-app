@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity, Button } from "react-native";
 import styles from "../Styles/styles";
 import Header from "../components/Header";
 import MentionsLegales from "./MentionsLegalesScreen";
@@ -8,9 +8,13 @@ import { useUser } from "../components/UserConnexion";
 
 export default ({ navigation }) => {
   [variable, setVariable] = useState(0);
-  const { user } = useUser();
+  const { user, updateUser } = useUser();
 
   console.log(user);
+
+  const deconnexion = ()=> {
+    updateUser(null);
+  }
 
   return (
     <View style={styles.body}>
@@ -18,6 +22,8 @@ export default ({ navigation }) => {
       <View style={styles.blueContainer}>
         <View style={styles.ecart}>
           <Text style={styles.blueTitre}>Profil</Text>
+          <Button title="Déconnexion" onPress={deconnexion}/>
+
           <Text style={styles.ProfilTexte}>
             <Text style={styles.gras}>Nom : {user.lastname}</Text> 
           </Text>
