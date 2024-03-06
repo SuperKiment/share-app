@@ -25,6 +25,17 @@ export default () => {
     }
   };
 
+  const verifyUserDev = async () => {
+    const data = await fetch(
+      "https://s4-8060.nuage-peda.fr/ShareMelanie/Share/public/api-connectuser?email=melanie.boudry@ecoles-epsi.net&mdp=nejz"
+    );
+    const dataJSON = await data.json();
+
+    console.log(dataJSON);
+
+    if (dataJSON.state == "success") updateUser(JSON.parse(dataJSON.data));
+  };
+
   return (
     <View style={styles.body}>
       <Header />
@@ -48,6 +59,13 @@ export default () => {
           onPress={() => {
             verifyUser();
             console.log(email, mdp);
+          }}
+        />
+
+        <Button
+          title="Connexion dev"
+          onPress={() => {
+            verifyUserDev();
           }}
         />
       </View>
