@@ -6,7 +6,7 @@ import MentionsLegales from "./MentionsLegalesScreen";
 import About from "./AboutScreen";
 import { useUser } from "../components/UserConnexion";
 
-export default () => {
+export default ({ navigation }) => {
   [variable, setVariable] = useState(0);
   const { user } = useUser();
 
@@ -31,23 +31,33 @@ export default () => {
             <Text style={styles.gras}>Fichiers partagés :</Text> 45
           </Text>
           <View style={styles.footer}>
-            <View style={styles.row} component={About}>
-              <Image
-                style={styles.logo}
-                source={{
-                  uri: "https://cdn-icons-png.flaticon.com/512/3059/3059531.png",
-                }}
-              />
-              <Text style={styles.mentions}>A propos</Text>
+            <View>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("A propos")}
+                style={styles.row}
+              >
+                <Image
+                  style={styles.logo}
+                  source={{
+                    uri: "https://cdn-icons-png.flaticon.com/512/3059/3059531.png",
+                  }}
+                />
+                <Text style={styles.mentions}>A propos</Text>
+              </TouchableOpacity>
             </View>
-            <View style={styles.row} component={MentionsLegales}>
-              <Image
-                style={styles.logo}
-                source={{
-                  uri: "https://cdn-icons-png.flaticon.com/512/4104/4104794.png",
-                }}
-              />
-              <Text style={styles.mentions}>Mentions légales</Text>
+            <View>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Mentions Légales")}
+                style={styles.row}
+              >
+                <Image
+                  style={styles.logo}
+                  source={{
+                    uri: "https://cdn-icons-png.flaticon.com/512/4104/4104794.png",
+                  }}
+                />
+                <Text style={styles.mentions}>Mentions légales</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>

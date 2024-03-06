@@ -16,7 +16,6 @@ export default () => {
 
   return (
     <View style={styles.body}>
-      <Header />
       <View style={styles.container}>
         <ScrollView>
           <Text style={styles.titre}>Mentions Légales</Text>
