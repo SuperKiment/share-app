@@ -1,6 +1,4 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import MyTabs from "./components/Bottom-Tabs";
 import { UserProvider } from "./components/UserConnexion";
 
 import { NavigationContainer } from "@react-navigation/native";
@@ -102,7 +100,9 @@ function BottomTabs() {
     </Tab.Navigator>
   );
 }
+
 export default function App() {
+
   return (
     <UserProvider>
       <NavigationContainer>
