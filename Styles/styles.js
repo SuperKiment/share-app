@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     margin: 15,
     backgroundColor: "#158CBA99",
     borderRadius: 10,
+    flex: 1,
   },
   ecart: {
     margin: 10,
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
     padding: 10,
     color: "white",
     backgroundColor: "#158CBA",
-    borderRadius: 10,
+    borderRadius: 45,
     alignSelf: "flex-start",
   },
   description: {
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   mentions: {
-    fontSize: 16,
+    fontSize: 20,
     color: "white",
   },
   footer: {
@@ -150,6 +151,36 @@ const styles = StyleSheet.create({
     textAlign: "justify",
     marginTop: 5,
     lineHeight: 25,
+  },
+
+  itemContainerFichier: {
+    justifyContent: "center",
+    borderRadius: 10,
+    alignItems: "center",
+    backgroundColor: "#158CBA",
+    flex: 1,
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
+
+  itemCodeFichier: {
+    textAlign: "center",
+    fontWeight: "600",
+    fontSize: 18,
+    color: "#fff",
+    margin: 5,
+  },
+
+  shadowProp: {
+    elevation: 1,
+    shadowColor: "#52006A",
+  },
+
+  picker: {
+    backgroundColor: "#158CBA",
+    padding: 16,
+    marginLeft: 40,
+    marginRight: 40,
   },
 });
 

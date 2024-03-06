@@ -16,6 +16,10 @@ import ProfilScreen from "./screens/ProfilScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import { useUser } from "./components/UserConnexion";
 import ConnexionScreen from "./screens/ConnexionScreen";
+import FichiersScreen from "./screens/FichiersScreen";
+import { FichierProvider } from "./components/FichierConnexion";
+import { FichiersProvider } from "./components/FichiersConnexion";
+import FichierScreen from "./screens/FichierScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -49,14 +53,14 @@ function BottomTabs() {
             }}
           />
           <Tab.Screen
-            name="Profil"
-            component={ProfilScreen}
+            name="Fichiers"
+            component={FichiersScreen}
             options={{
-              tabBarLabel: "Profil",
+              tabBarLabel: "Fichiers",
               tabBarIcon: ({ color, size }) => (
                 <Image
                   source={{
-                    uri: "https://cdn.icon-icons.com/icons2/1747/PNG/512/profile_113589.png",
+                    uri: "https://cdn.icon-icons.com/icons2/1674/PNG/512/filetext_111171.png",
                   }}
                   style={{ width: size, height: size, tintColor: "white" }}
                 />
@@ -65,14 +69,14 @@ function BottomTabs() {
             }}
           />
           <Tab.Screen
-            name="Paramètres"
-            component={SettingsScreen}
+            name="Profil"
+            component={ProfilScreen}
             options={{
-              tabBarLabel: "Paramètres",
+              tabBarLabel: "Profil",
               tabBarIcon: ({ color, size }) => (
                 <Image
                   source={{
-                    uri: "https://cdn-icons-png.flaticon.com/512/60/60473.png",
+                    uri: "https://cdn.icon-icons.com/icons2/1747/PNG/512/profile_113589.png",
                   }}
                   style={{ width: size, height: size, tintColor: "white" }}
                 />
@@ -105,36 +109,44 @@ function BottomTabs() {
 export default function App() {
   return (
     <UserProvider>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="BottomTabs"
-            component={BottomTabs}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="A propos"
-            component={AboutScreen}
-            options={{ headerShown: true }}
-            style={{}}
-          />
-          <Stack.Screen
-            name="Mentions Légales"
-            component={MentionsLegalesScreen}
-            options={{ headerShown: true }}
-          />
-          <Stack.Screen
-            name="Profil"
-            component={ProfilScreen}
-            options={{ headerShown: false }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <FichiersProvider>
+        <FichierProvider>
+          <NavigationContainer>
+            <Stack.Navigator>
+              <Stack.Screen
+                name="BottomTabs"
+                component={BottomTabs}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Home"
+                component={HomeScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="A propos"
+                component={AboutScreen}
+                options={{ headerShown: true }}
+              />
+              <Stack.Screen
+                name="Fichier"
+                component={FichierScreen}
+                options={{ headerShown: true }}
+              />
+              <Stack.Screen
+                name="Mentions Légales"
+                component={MentionsLegalesScreen}
+                options={{ headerShown: true }}
+              />
+              <Stack.Screen
+                name="Profil"
+                component={ProfilScreen}
+                options={{ headerShown: false }}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </FichierProvider>
+      </FichiersProvider>
     </UserProvider>
   );
 }

@@ -13,8 +13,10 @@ export default () => {
         <Text style={styles.titre}>Accueil</Text>
         <Text style={styles.description}>
           Une application mobile révolutionnaire conçue pour{" "}
-          <Text style={[styles.gras, styles.italic]}>simplifier le partage</Text> de fichiers
-          entre utilisateurs Android.
+          <Text style={[styles.gras, styles.italic]}>
+            simplifier le partage
+          </Text>{" "}
+          de fichiers entre utilisateurs Android.
         </Text>
         <Image
           style={styles.image}
@@ -23,8 +25,10 @@ export default () => {
         <Text style={styles.description}>
           Avec une interface conviviale et des fonctionnalités avancées, "Share"
           vise à faciliter{" "}
-          <Text style={[styles.gras, styles.italic]}>l'échange de données numériques</Text> de
-          manière sécurisée et efficace.
+          <Text style={[styles.gras, styles.italic]}>
+            l'échange de données numériques
+          </Text>{" "}
+          de manière sécurisée et efficace.
         </Text>
         <TouchableOpacity style={styles.bouton}>
           <Text style={styles.texteBouton}>Partager</Text>

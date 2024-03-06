@@ -1,5 +1,13 @@
 import React from "react";
-import { View, Text, StyleSheet, Dimensions, SafeAreaView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  SafeAreaView,
+  TouchableOpacity,
+  Linking,
+} from "react-native";
 import { FlatGrid } from "react-native-super-grid";
 import styles from "../Styles/styles";
 import Header from "../components/Header";
@@ -11,24 +19,28 @@ export default () => {
       title: "Mélanie BOUDRY",
       role: "Etudiante",
       backgroundColor: "#F05C5C",
+      url: "https://s4-8057.nuage-peda.fr/portfolio-mboudry/",
     },
     {
       id: 2,
       title: "Agathe POTEAUX",
       role: "Etudiante",
       backgroundColor: "#87C48A",
+      url: "https://s4-8056.nuage-peda.fr/portfolio/AgatheP/",
     },
     {
       id: 3,
       title: "Antoine BRUYE",
       role: "Etudiant",
       backgroundColor: "#7A93EE",
+      url: "https://s4-8058.nuage-peda.fr/Portfolio/",
     },
     {
       id: 4,
       title: "Clément PARISOT",
       role: "Etudiant",
       backgroundColor: "#EEEC7A",
+      url: "https://superkiment.fr/",
     },
   ];
 
@@ -50,7 +62,10 @@ export default () => {
             style={styles.gridView}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item, index }) => (
-              <View
+              <TouchableOpacity
+                onPress={() => {
+                  Linking.openURL(item.url);
+                }}
                 style={[
                   styles.itemContainer,
                   { backgroundColor: item.backgroundColor },
@@ -58,7 +73,7 @@ export default () => {
               >
                 <Text style={styles.itemName}>{item.title}</Text>
                 <Text style={styles.itemCode}>{item.role}</Text>
-              </View>
+              </TouchableOpacity>
             )}
           />
         }
