@@ -14,12 +14,9 @@ import ProfilScreen from "./screens/ProfilScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import { useUser } from "./components/UserConnexion";
 import ConnexionScreen from "./screens/ConnexionScreen";
-<<<<<<< Updated upstream
 import FichiersScreen from "./screens/FichiersScreen";
 import FichierScreen from "./screens/FichierScreen";
-=======
 // import UpdateProfilScreen from "./screens/UpdateProfilScreen";
->>>>>>> Stashed changes
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
