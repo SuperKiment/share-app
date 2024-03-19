@@ -3,13 +3,18 @@ import { View, Text, Button, TextInput } from "react-native";
 import Header from "../components/Header";
 import styles from "../Styles/styles";
 import { useUser } from "../components/UserConnexion";
-import { compare } from "react-native-bcrypt";
+// import { compare } from "react-native-bcrypt";
 
 export default () => {
-  [email, setEmail] = useState("");
-  [mdp, setMdp] = useState("");
-  [message, setMessage] = useState("");
+  const [email, setEmail] = useState("");
+  const [mdp, setMdp] = useState("");
+  const [nom, setNom] = useState("");
+  const [prenom, setPrenom] = useState("");
+
+  const [message, setMessage] = useState("");
+  const [inscription, setInscription] = useState(false);
   const [chargement, setChargement] = useState(false);
+
   const { user, updateUser } = useUser();
 
   const verifyUser = async () => {
@@ -51,10 +56,9 @@ export default () => {
     setChargement(false);
   };
 
-  return (
-    <View style={styles.body}>
-      <Header />
-      <View style={styles.container}>
+  const InputConnexion = () => {
+    return (
+      <>
         <Text>Connexion</Text>
 
         <TextInput
@@ -62,11 +66,13 @@ export default () => {
           keyboardType="email-address"
           style={{ padding: 10 }}
           onChangeText={setEmail}
+          value={email}
         />
         <TextInput
           placeholder="Mot de passe"
           style={{ padding: 10 }}
           onChangeText={setMdp}
+          value={mdp}
         />
 
         <Button
@@ -86,6 +92,74 @@ export default () => {
 
         {chargement && <Text>Chargement...</Text>}
         <Text>{message}</Text>
+      </>
+    );
+  };
+
+  const InputInscription = () => {
+    return (
+      <>
+        <Text>Inscription</Text>
+
+        <TextInput
+          placeholder="E-Mail"
+          keyboardType="email-address"
+          style={{ padding: 10 }}
+          onChangeText={setEmail}
+          value={email}
+        />
+
+        <TextInput
+          placeholder="Nom"
+          style={{ padding: 10 }}
+          onChangeText={setMdp}
+        />
+
+        <TextInput
+          placeholder="Prénom"
+          style={{ padding: 10 }}
+          onChangeText={setMdp}
+        />
+
+        <TextInput
+          placeholder="Mot de passe"
+          style={{ padding: 10 }}
+          onChangeText={setMdp}
+          value={mdp}
+        />
+
+        <Button
+          title="Connexion"
+          onPress={() => {
+            verifyUser();
+            console.log(email, mdp);
+          }}
+        />
+
+        <Button
+          title="Connexion dev"
+          onPress={() => {
+            verifyUserDev();
+          }}
+        />
+
+        {chargement && <Text>Chargement...</Text>}
+        <Text>{message}</Text>
+      </>
+    );
+  };
+
+  return (
+    <View style={styles.body}>
+      <Header />
+      <View style={styles.container}>
+        {inscription ? <InputInscription /> : <InputConnexion />}
+        <Button
+          title={inscription ? "Se connecter" : "S'inscrire"}
+          onPress={() => {
+            setInscription(!inscription);
+          }}
+        />
       </View>
     </View>
   );
