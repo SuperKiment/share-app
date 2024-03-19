@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: 300,
+    marginTop: 150,
   },
   row: {
     flexDirection: "row",
@@ -118,6 +118,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     flex: 1,
   },
+
   itemContainer: {
     justifyContent: "flex-end",
     borderRadius: 5,
@@ -181,6 +182,24 @@ const styles = StyleSheet.create({
     padding: 16,
     marginLeft: 40,
     marginRight: 40,
+  },
+
+  gridViewFichiers: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    padding: 10,
+  },
+
+  catItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 5, // Espacement entre chaque élément de catégorie
+  },
+
+  categorieContainer: {
+    alignItems: "center", // Centrer horizontalement
+    justifyContent: "center", // Centrer verticalement
   },
 });
 

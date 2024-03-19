@@ -39,7 +39,7 @@ export default () => {
       id: 4,
       title: "Clément PARISOT",
       role: "Etudiant",
-      backgroundColor: "#EEEC7A",
+      backgroundColor: "#EE8AFE",
       url: "https://superkiment.fr/",
     },
   ];

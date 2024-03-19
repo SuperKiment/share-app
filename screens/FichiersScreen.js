@@ -1,13 +1,11 @@
-import React, { useEffect, useState, createContext } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   Dimensions,
-  SafeAreaView,
-  Image,
-  ScrollView,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import { FlatGrid } from "react-native-super-grid";
 
@@ -15,26 +13,20 @@ import styles from "../Styles/styles";
 import Header from "../components/Header";
 import { useUser } from "../components/UserConnexion";
 import { Picker } from "@react-native-picker/picker";
-import { useFichiers } from "../components/FichiersConnexion";
 
 export default ({ navigation }) => {
-  [variable, setVariable] = useState(0);
   const itemDimension = (Dimensions.get("window").width - 60) / 3 - 20;
   const [selectedValue, setSelectedValue] = useState("MesFichiers");
-  const { fichiers, setFichiers } = useFichiers();
-  const { fichiersShared, setFichiersShared } = useFichiers();
+  const [fichiers, setFichiers] = useState([]);
+  const [fichiersShared, setFichiersShared] = useState([]);
   const { user } = useUser();
+  const [loading, setLoading] = useState(true);
 
-  const fetchData = async () => {
-    const data = await fetch(
-      "https://s4-8060.nuage-peda.fr/ShareMelanie/Share/public/api"
-    );
-    const dataJSON = await data.json();
-
-    console.log(dataJSON);
-
-    setVariable(dataJSON);
-  };
+  useEffect(() => {
+    getFichiersById();
+    getFichiersShared();
+    setLoading(false);
+  }, []);
 
   const getFichiersById = async () => {
     const data = await fetch(
@@ -42,108 +34,132 @@ export default ({ navigation }) => {
         user.id
     );
     const dataJSON = await data.json();
-    //console.log(dataJSON);
-    if (dataJSON.state == "success") {
+    if (dataJSON.state === "success") {
       setFichiers(dataJSON.data);
     }
   };
 
   const getFichiersShared = async () => {
     const data = await fetch(
-      "https://s4-8057.nuage-peda.fr/share/api-getfichiers?proprietaire_id=" +
+      "https://s4-8057.nuage-peda.fr/share/api-getfichiersPartageWithMe?me=" +
         user.id
     );
     const dataJSON = await data.json();
-    if (dataJSON.state == "success") {
+    if (dataJSON.state === "success") {
       setFichiersShared(dataJSON.data);
     }
   };
 
-  useEffect(() => {
-    getFichiersById();
-    getFichiersShared();
-  }, []);
-
   return (
     <View style={styles.body}>
       <Header />
-      <ScrollView style={styles.blueContainer}>
+      <View style={styles.blueContainer}>
         <View style={styles.row}>
           <View style={styles.ecart}>
             <Text style={styles.blueTitre}>Fichiers</Text>
           </View>
         </View>
-
         <Picker
           selectedValue={selectedValue}
           onValueChange={(itemValue, itemIndex) => {
             setSelectedValue(itemValue);
-            console.log(itemValue);
           }}
           style={styles.picker}
+          mode={"dropdown"}
         >
           <Picker.Item label="Mes fichiers" value="MesFichiers" />
           <Picker.Item label="Les partages" value="LesPartages" />
           <Picker.Item label="Upload" value="Upload" />
         </Picker>
-        <View>
-          {selectedValue == "MesFichiers" && (
-            <FlatGrid
-              itemDimension={itemDimension}
-              data={fichiers}
-              style={styles.gridView}
-              keyExtractor={(item) => item.id.toString()}
-              renderItem={({ item }) => (
-                <TouchableOpacity
-                  style={[styles.itemContainerFichier, styles.shadowProp]}
-                  onPress={() => {
-                    navigation.navigate("Fichier", { idFichier: item.id });
-                  }}
-                >
-                  {item.extension == "pdf" ? (
-                    <Image
-                      source={{
-                        uri: "https://cdn-icons-png.flaticon.com/512/29/29587.png",
-                      }}
-                      style={{ width: 100, height: 100, tintColor: "white" }}
-                    />
-                  ) : (
-                    <Image
-                      source={{
-                        uri: "https://cdn.icon-icons.com/icons2/1674/PNG/512/filetext_111171.png",
-                      }}
-                      style={{ width: 100, height: 100, tintColor: "white" }}
-                    />
-                  )}
-                  <Text style={styles.itemCodeFichier}>
-                    {item.nom_original}
-                  </Text>
-                </TouchableOpacity>
-              )}
-            />
-          )}
-          {selectedValue == "LesPartages" && (
-            <FlatGrid
-              itemDimension={itemDimension}
-              data={fichiers}
-              style={styles.gridView}
-              keyExtractor={(item) => item.id.toString()}
-              renderItem={({ item }) => (
-                <TouchableOpacity
-                  style={[styles.itemContainerFichier, styles.shadowProp]}
-                  onPress={() => {
-                    navigation.navigate("Fichier", { idFichier: item.id });
-                  }}
-                >
-                  <Text style={styles.itemCodeFichier}>
-                    {item.nom_original}
-                  </Text>
-                </TouchableOpacity>
-              )}
-            />
-          )}
-        </View>
-      </ScrollView>
+        {loading ? (
+          <View style={styles.body}>
+            <Text>Chargement en cours...</Text>
+          </View>
+        ) : (
+          <>
+            {selectedValue === "MesFichiers" && (
+              <FlatGrid
+                itemDimension={itemDimension}
+                data={fichiers}
+                style={styles.gridView}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    style={[styles.itemContainerFichier, styles.shadowProp]}
+                    onPress={() => {
+                      navigation.navigate("Fichier", {
+                        type: "Fichier",
+                        idFichier: item.id,
+                      });
+                    }}
+                  >
+                    {item.extension === "pdf" ? (
+                      <Image
+                        source={{
+                          uri: "https://cdn-icons-png.flaticon.com/512/29/29587.png",
+                        }}
+                        style={{ width: 100, height: 100, tintColor: "white" }}
+                      />
+                    ) : (
+                      <Image
+                        source={{
+                          uri: "https://cdn.icon-icons.com/icons2/1674/PNG/512/filetext_111171.png",
+                        }}
+                        style={{ width: 100, height: 100, tintColor: "white" }}
+                      />
+                    )}
+                    <Text style={styles.itemCodeFichier}>
+                      {item.nom_original.length > 20
+                        ? item.nom_original.slice(0, 20) +
+                          "..." +
+                          item.extension
+                        : item.nom_original}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              />
+            )}
+            {selectedValue === "LesPartages" && (
+              <FlatGrid
+                itemDimension={itemDimension}
+                data={fichiersShared}
+                style={styles.gridView}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    style={[styles.itemContainerFichier, styles.shadowProp]}
+                    onPress={() => {
+                      navigation.navigate("Fichier", {
+                        type: "Partage",
+                        idFichier: item.id,
+                      });
+                    }}
+                  >
+                    {item.extension === "pdf" ? (
+                      <Image
+                        source={{
+                          uri: "https://cdn-icons-png.flaticon.com/512/29/29587.png",
+                        }}
+                        style={{ width: 100, height: 100, tintColor: "white" }}
+                      />
+                    ) : (
+                      <Image
+                        source={{
+                          uri: "https://cdn.icon-icons.com/icons2/1674/PNG/512/filetext_111171.png",
+                        }}
+                        style={{ width: 100, height: 100, tintColor: "white" }}
+                      />
+                    )}
+                    <Text style={styles.itemCodeFichier}>
+                      {item.nom_original}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              />
+            )}
+          </>
+        )}
+      </View>
     </View>
   );
 };
