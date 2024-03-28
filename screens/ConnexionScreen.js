@@ -3,8 +3,10 @@ import { View, Text, Button, TextInput } from "react-native";
 import Header from "../components/Header";
 import styles from "../Styles/styles";
 import { useUser } from "../components/UserConnexion";
-import { compare } from "react-native-bcrypt";
-import { nuage } from "../config/config";
+// import { compare } from "react-native-bcrypt";
+import { nuage } from "../config/config.js";
+
+console.log(nuage);
 
 export default () => {
   [email, setEmail] = useState("");
@@ -16,10 +18,7 @@ export default () => {
   const verifyUser = async () => {
     if (email != "" && mdp != "") {
       const data = await fetch(
-        nuage + "api-connectuser?email=" +
-          email +
-          "&mdp=" +
-          mdp
+        nuage + "api-connectuser?email=" + email + "&mdp=" + mdp
       );
       const dataJSON = await data.json();
 
@@ -33,7 +32,8 @@ export default () => {
     setChargement(true);
 
     const data = await fetch(
-      nuage + "api-connectuser?email=melanie.boudry@ecoles-epsi.net&mdp=123456789"
+      nuage +
+        "api-connectuser?email=melanie.boudry@ecoles-epsi.net&mdp=123456789"
     );
     const dataJSON = await data.json();
 
