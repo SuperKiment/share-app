@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import styles from "../Styles/styles";
 import { useUser } from "../components/UserConnexion";
 import { compare } from "react-native-bcrypt";
+import { nuage } from "../config/config";
 
 export default () => {
   [email, setEmail] = useState("");
@@ -15,7 +16,7 @@ export default () => {
   const verifyUser = async () => {
     if (email != "" && mdp != "") {
       const data = await fetch(
-        "https://s4-8056.nuage-peda.fr/ShareFinal/Share/public/api-connectuser?email=" +
+        nuage + "api-connectuser?email=" +
           email +
           "&mdp=" +
           mdp
@@ -32,7 +33,7 @@ export default () => {
     setChargement(true);
 
     const data = await fetch(
-      "https://s4-8060.nuage-peda.fr/ShareMelanie/Share/public/api-connectuser?email=melanie.boudry@ecoles-epsi.net&mdp=123456789"
+      nuage + "api-connectuser?email=melanie.boudry@ecoles-epsi.net&mdp=123456789"
     );
     const dataJSON = await data.json();
 

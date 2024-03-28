@@ -13,7 +13,7 @@ export default ({ navigation }) => {
   const updateProfil = async () => {
     if (id != "") {
       const data = await fetch(
-        "https://s4-8056.nuage-peda.fr/ShareFinal/Share/public/api-updateuser?id=" +
+        nuage + "api-updateuser?id=" +
           id +
           "&firstname=" +
           firstname +

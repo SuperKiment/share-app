@@ -13,6 +13,7 @@ import styles from "../Styles/styles";
 import Header from "../components/Header";
 import { useUser } from "../components/UserConnexion";
 import { Picker } from "@react-native-picker/picker";
+import { nuage } from "../config/config";
 
 export default ({ navigation }) => {
   const itemDimension = (Dimensions.get("window").width - 60) / 3 - 20;
@@ -30,7 +31,7 @@ export default ({ navigation }) => {
 
   const getFichiersById = async () => {
     const data = await fetch(
-      "https://s4-8057.nuage-peda.fr/share/api/fichiers?proprietaire=" + user.id
+      nuage + "api/fichiers?proprietaire=" + user.id
     );
 
     const dataJSON = await data.json();
@@ -41,7 +42,7 @@ export default ({ navigation }) => {
 
   const getFichiersShared = async () => {
     const data = await fetch(
-      "https://s4-8057.nuage-peda.fr/share/api/fichiers?user=" + user.id
+      nuage + "api/fichiers?user=" + user.id
     );
 
     const dataJSON = await data.json();

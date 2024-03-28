@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import styles from "../Styles/styles";
 import Header from "../components/Header";
+import { nuage } from "../config/config";
 
 function formatDate(dateString) {
   const date = new Date(dateString); // Convertir la chaîne de date en objet Date
@@ -21,7 +22,7 @@ export default ({ route }) => {
 
   const getFichierById = async (idFichier) => {
     const data = await fetch(
-      "https://s4-8057.nuage-peda.fr/share/api/fichiers/" + idFichier
+      nuage + "api/fichiers/" + idFichier
     );
     const dataJSON = await data.json();
     setFichier(dataJSON);
@@ -109,6 +110,9 @@ export default ({ route }) => {
                     <Text style={styles.ProfilTexte}>Aucun partage</Text>
                   </View>
                 )}
+            <TouchableOpacity style={styles.petitBouton}>
+                <Text style={styles.textePetitBouton}>Partager</Text>
+            </TouchableOpacity>
               </>
             ) : (
               <View></View>

@@ -30,13 +30,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   titre: {
-    fontSize: 32,
+    fontSize: 30,
     fontWeight: "bold",
     marginTop: 15,
     marginBottom: 25,
   },
   blueTitre: {
-    fontSize: 32,
+    fontSize: 30,
     fontWeight: "bold",
     marginTop: 15,
     marginBottom: 15,
@@ -75,6 +75,17 @@ const styles = StyleSheet.create({
   texteBouton: {
     color: "white",
     fontSize: 35,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  petitBouton: {
+    backgroundColor: "#158CBA",
+    padding: 12,
+    borderRadius: 5,
+  },
+  textePetitBouton: {
+    color: "white",
+    fontSize: 15,
     fontWeight: "bold",
     textAlign: "center",
   },

@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, TextInput } from "react-native";
 import styles from "../../Styles/styles";
 import Header from "../../components/Header";
 import { useUser } from "../../components/UserConnexion";
+import { nuage } from "../../config/config";
 
 export const Modification = ({ navigation }) => {
   const AfficherModif = () => {
@@ -16,7 +17,7 @@ export const Modification = ({ navigation }) => {
       try {
         if (id != "") {
           const data = await fetch(
-            "https://s4-8056.nuage-peda.fr/ShareFinal/Share/public/api-updateuser?id=" +
+            nuage + "api-updateuser?id=" +
               id +
               "&firstname=" +
               firstname +
@@ -45,17 +46,17 @@ export const Modification = ({ navigation }) => {
     return (
       <>
         <View>
-          <Text style={styles.titre}>Modification du profil</Text>
-          <Text style={styles.description}>Nom</Text>
+          <Text style={styles.blueTitre}>Modification du profil</Text>
+          <Text style={{...styles.gras, ...styles.ProfilTexte}}>Nom</Text>
           <TextInput
             defaultValue={lastname}
-            style={{ padding: 10 }}
+            style={styles.ProfilTexte}
             onChangeText={setLastname}
           />
-          <Text style={styles.description}>Prénom</Text>
+          <Text style={{...styles.gras, ...styles.ProfilTexte}}>Prénom</Text>
           <TextInput
             defaultValue={firstname}
-            style={{ padding: 10 }}
+            style={styles.ProfilTexte}
             onChangeText={setFirstname}
           />
         </View>
