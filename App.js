@@ -13,10 +13,10 @@ import MentionsLegalesScreen from "./screens/MentionsLegalesScreen";
 import ProfilScreen from "./screens/ProfilScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import { useUser } from "./components/UserConnexion";
-import ConnexionScreen from "./screens/ConnexionScreen";
+import ConnexionScreen from "./screens/ConnexionNavScreen";
 import FichiersScreen from "./screens/FichiersScreen";
 import FichierScreen from "./screens/FichierScreen";
-import InscriptionScreen from "./screens/InscriptionScreen";
+import InscriptionScreen from "./screens/connexionScreens/InscriptionScreen";
 // import UpdateProfilScreen from "./screens/UpdateProfilScreen";
 import ForumScreen from "./screens/ForumScreen";
 

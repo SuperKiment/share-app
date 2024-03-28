@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { View, Text, Button, TextInput } from "react-native";
-import Header from "../components/Header";
-import styles from "../Styles/styles";
-import { useUser } from "../components/UserConnexion";
+import Header from "../../components/Header.js";
+import styles from "../../Styles/styles.js";
+import { useUser } from "../../components/UserConnexion.js";
 // import { compare } from "react-native-bcrypt";
-import { nuage } from "../config/config.js";
+import { nuage } from "../../config/config.js";
 
 console.log(nuage);
 
-export default () => {
+export default ({navigation}) => {
   [email, setEmail] = useState("");
   [mdp, setMdp] = useState("");
   [message, setMessage] = useState("");
@@ -112,7 +112,7 @@ export default () => {
         <Button
           title="Inscription"
           onPress={() => {
-            verifyUserDev();
+            navigation.navigate("Inscription");
           }}
         />
 
