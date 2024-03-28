@@ -16,6 +16,7 @@ import { useUser } from "./components/UserConnexion";
 import ConnexionScreen from "./screens/ConnexionScreen";
 import FichiersScreen from "./screens/FichiersScreen";
 import FichierScreen from "./screens/FichierScreen";
+import InscriptionScreen from "./screens/InscriptionScreen";
 // import UpdateProfilScreen from "./screens/UpdateProfilScreen";
 import ForumScreen from "./screens/ForumScreen";
 
@@ -135,6 +136,11 @@ export default function App() {
             name="Home"
             component={HomeScreen}
             options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Inscription"
+            component={InscriptionScreen}
+            options={{  }}
           />
           <Stack.Screen
             name="A propos"

@@ -15,41 +15,65 @@ export default () => {
   const [chargement, setChargement] = useState(false);
   const { user, updateUser } = useUser();
 
-  const verifyUser = async () => {
-    if (email != "" && mdp != "") {
+  const testToken = async () => {
+    try {
       const data = await fetch(
-        nuage + "api-connectuser?email=" + email + "&mdp=" + mdp
+        "https://s4-8060.nuage-peda.fr/ShareMelanie/Share/api/authentication_token",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            email: "melanie.boudry@ecoles-epsi.net",
+            password: "123456789",
+          }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        }
       );
-      const dataJSON = await data.json();
+
+      const dataJSON = await data.text();
 
       console.log(dataJSON);
-
-      if (dataJSON.state == "success") updateUser(JSON.parse(dataJSON.data));
+    } catch (e) {
+      console.log(e);
     }
   };
 
-  const verifyUserDev = async () => {
-    setChargement(true);
+  const connectUser = async (email, mdp) => {
+    try {
+      const url = nuage + "api/authentication_token";
+      console.log(url);
+      const data = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify({
+          email: email,
+          password: mdp,
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      });
 
-    const data = await fetch(
-      nuage +
-        "api-connectuser?email=melanie.boudry@ecoles-epsi.net&mdp=123456789"
-    );
-    const dataJSON = await data.json();
+      const dataJSON = await data.json();
 
-    console.log(dataJSON);
-    setMessage(dataJSON.message);
+      console.log("data : ", dataJSON.data);
 
-    if (dataJSON.state == "success") {
-      const userTemp = JSON.parse(dataJSON.data);
-
-      // const isPasswordOK = await compare(userTemp.password, "123456789");
-      // if (await isPasswordOK) updateUser(userTemp);
-
-      updateUser(userTemp);
+      if (dataJSON.code == undefined && dataJSON.data != undefined) {
+        updateUser({ ...dataJSON.data, email: email });
+      }
+    } catch (e) {
+      console.log(e);
     }
+  };
 
-    setChargement(false);
+  const verifyUser = async () => {
+    if (email == "" || mdp == "") return;
+
+    connectUser(email.toLowerCase(), mdp);
+  };
+
+  const verifyUserDev = async () => {
+    connectUser("melanie.boudry@ecoles-epsi.net", "123456789");
   };
 
   return (
@@ -74,7 +98,7 @@ export default () => {
           title="Connexion"
           onPress={() => {
             verifyUser();
-            console.log(email, mdp);
+            // console.log(email, mdp);
           }}
         />
 
@@ -82,6 +106,20 @@ export default () => {
           title="Connexion dev"
           onPress={() => {
             verifyUserDev();
+          }}
+        />
+
+        <Button
+          title="Inscription"
+          onPress={() => {
+            verifyUserDev();
+          }}
+        />
+
+        <Button
+          title="Test Token"
+          onPress={() => {
+            testToken();
           }}
         />
 

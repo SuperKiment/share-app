@@ -22,10 +22,10 @@ export const Profil = ({ navigation }) => {
       <>
         <Text style={styles.blueTitre}>Profil</Text>
         <Text style={styles.ProfilTexte}>
-          <Text style={styles.gras}>Nom : {user.lastname}</Text>
+          <Text style={styles.gras}>Nom : {user.nom}</Text>
         </Text>
         <Text style={styles.ProfilTexte}>
-          <Text style={styles.gras}>Prénom :</Text> {user.firstname}
+          <Text style={styles.gras}>Prénom :</Text> {user.prenom}
         </Text>
         <Text style={styles.ProfilTexte}>
           <Text style={styles.gras}>Email :</Text> {user.email}
