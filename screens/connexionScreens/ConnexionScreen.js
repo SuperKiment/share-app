@@ -8,7 +8,7 @@ import { nuage } from "../../config/config.js";
 
 console.log(nuage);
 
-export default ({navigation}) => {
+export default ({ navigation }) => {
   [email, setEmail] = useState("");
   [mdp, setMdp] = useState("");
   [message, setMessage] = useState("");
@@ -40,6 +40,8 @@ export default ({navigation}) => {
   };
 
   const connectUser = async (email, mdp) => {
+    setChargement(true);
+
     try {
       const url = nuage + "api/authentication_token";
       console.log(url);
@@ -56,7 +58,9 @@ export default ({navigation}) => {
 
       const dataJSON = await data.json();
 
-      console.log("data : ", dataJSON.data);
+      console.log("data : ", dataJSON);
+
+      if (dataJSON.message != undefined) setMessage(dataJSON.message);
 
       if (dataJSON.code == undefined && dataJSON.data != undefined) {
         updateUser({ ...dataJSON.data, email: email });
@@ -64,6 +68,7 @@ export default ({navigation}) => {
     } catch (e) {
       console.log(e);
     }
+    setChargement(false);
   };
 
   const verifyUser = async () => {
