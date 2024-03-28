@@ -16,6 +16,7 @@ import { useUser } from "./components/UserConnexion";
 import ConnexionScreen from "./screens/ConnexionScreen";
 import FichiersScreen from "./screens/FichiersScreen";
 import FichierScreen from "./screens/FichierScreen";
+// import UpdateProfilScreen from "./screens/UpdateProfilScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -136,6 +137,16 @@ export default function App() {
           <Stack.Screen
             name="Profil"
             component={ProfilScreen}
+            options={{ headerShown: false }}
+          />
+          {/* <Stack.Screen
+            name="UpdateProfil"
+            component={UpdateProfilScreen}
+            options={{ headerShown: false }}
+          /> */}
+          <Stack.Screen
+            name="Connexion"
+            component={ConnexionScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
