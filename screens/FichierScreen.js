@@ -12,7 +12,7 @@ function formatDate(dateString) {
 export default ({ route }) => {
   const { idFichier } = route.params;
   const { type } = route.params;
-  const [fichier, setFichier] = useState([]);
+  const [fichier, setFichier] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -21,16 +21,18 @@ export default ({ route }) => {
 
   const getFichierById = async (idFichier) => {
     const data = await fetch(
-      "https://s4-8057.nuage-peda.fr/share/api-getfichierByInfo?idFichier=" +
-        idFichier
+      "https://s4-8057.nuage-peda.fr/share/api/fichiers/" + idFichier
     );
     const dataJSON = await data.json();
-    if (dataJSON.state === "success") {
-      setFichier(dataJSON.data);
-      setLoading(false);
-    }
+    setFichier(dataJSON);
+    setLoading(false);
+
+    // if (dataJSON.length > 0) {
+    //   console.log("couocu");
+    // }
   };
 
+  console.log(fichier);
   return (
     <View style={styles.body}>
       {loading ? (
@@ -40,34 +42,37 @@ export default ({ route }) => {
       ) : (
         <View style={styles.blueContainer}>
           <View style={styles.ecart}>
-            <Text style={styles.blueTitre}>{fichier.nom_original}</Text>
+            <Text style={styles.blueTitre}>{fichier["nomOriginal"]}</Text>
             <Text style={styles.ProfilTexte}>
-              <Text style={styles.gras}>Extension : </Text> {fichier.extension}
+              <Text style={styles.gras}>Extension : </Text>{" "}
+              {fichier["extension"]}
             </Text>
             <Text style={styles.ProfilTexte}>
               <Text style={styles.gras}>Date d'envoi : </Text>
-              {fichier.date_envoi && formatDate(fichier.date_envoi.date)}
+              {fichier["dateEnvoi"] && formatDate(fichier["dateEnvoi"])}
             </Text>
             <Text style={styles.ProfilTexte}>
               <Text style={styles.gras}>Propriétaire : </Text>
-              {fichier.proprietaire_name}
+              {fichier["proprietaire"]["lastname"] +
+                " " +
+                fichier["proprietaire"]["firstname"]}
             </Text>
             <Text style={styles.ProfilTexte}>
-              <Text style={styles.gras}>Taille : </Text> {fichier.taille / 1024}{" "}
-              kilo-octets
+              <Text style={styles.gras}>Taille : </Text>{" "}
+              {Math.round(fichier["taille"] / 1024)} kilo-octets
             </Text>
 
             <Text style={styles.ProfilTexte}>
               <Text style={styles.gras}>Catégorie : </Text>
             </Text>
-            {fichier.categorie.length > 0 ? (
+            {fichier["categories"].length > 0 ? (
               <View style={styles.categorieContainer}>
                 <Text style={styles.ProfilTexte}>
-                  {fichier.categorie.map((categorie, index) => (
+                  {fichier["categories"].map((categorie, index) => (
                     <React.Fragment key={index}>
                       <Text>{"\u2022"} </Text>
                       <Text>
-                        {categorie.libelle}
+                        {categorie["libelle"]}
                         {"\n"}
                       </Text>
                     </React.Fragment>
@@ -85,14 +90,14 @@ export default ({ route }) => {
                 <Text style={styles.ProfilTexte}>
                   <Text style={styles.gras}>Partagé à : </Text>
                 </Text>
-                {fichier.usersPartagees.length > 0 ? (
+                {fichier["user"].length > 0 ? (
                   <View style={styles.categorieContainer}>
                     <Text style={styles.ProfilTexte}>
-                      {fichier.usersPartagees.map((userPartagee, index) => (
+                      {fichier["user"].map((user, index) => (
                         <React.Fragment key={index}>
                           <Text>{"\u2022"} </Text>
                           <Text>
-                            {userPartagee.lastname} {userPartagee.firstname}
+                            {user["lastname"]} {user["firstname"]}
                             {"\n"}
                           </Text>
                         </React.Fragment>

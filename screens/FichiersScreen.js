@@ -30,23 +30,23 @@ export default ({ navigation }) => {
 
   const getFichiersById = async () => {
     const data = await fetch(
-      "https://s4-8057.nuage-peda.fr/share/api-getfichiers?proprietaire_id=" +
-        user.id
+      "https://s4-8057.nuage-peda.fr/share/api/fichiers?proprietaire=" + user.id
     );
+
     const dataJSON = await data.json();
-    if (dataJSON.state === "success") {
-      setFichiers(dataJSON.data);
+    if (dataJSON["hydra:totalItems"] > 0) {
+      setFichiers(dataJSON["hydra:member"]);
     }
   };
 
   const getFichiersShared = async () => {
     const data = await fetch(
-      "https://s4-8057.nuage-peda.fr/share/api-getfichiersPartageWithMe?me=" +
-        user.id
+      "https://s4-8057.nuage-peda.fr/share/api/fichiers?user=" + user.id
     );
+
     const dataJSON = await data.json();
-    if (dataJSON.state === "success") {
-      setFichiersShared(dataJSON.data);
+    if (dataJSON["hydra:totalItems"] > 0) {
+      setFichiersShared(dataJSON["hydra:member"]);
     }
   };
 
@@ -82,18 +82,18 @@ export default ({ navigation }) => {
                 itemDimension={itemDimension}
                 data={fichiers}
                 style={styles.gridView}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={(item) => item["id"].toString()}
                 renderItem={({ item }) => (
                   <TouchableOpacity
                     style={[styles.itemContainerFichier, styles.shadowProp]}
                     onPress={() => {
                       navigation.navigate("Fichier", {
                         type: "Fichier",
-                        idFichier: item.id,
+                        idFichier: item["id"],
                       });
                     }}
                   >
-                    {item.extension === "pdf" ? (
+                    {item["extension"] === "pdf" ? (
                       <Image
                         source={{
                           uri: "https://cdn-icons-png.flaticon.com/512/29/29587.png",
@@ -109,11 +109,11 @@ export default ({ navigation }) => {
                       />
                     )}
                     <Text style={styles.itemCodeFichier}>
-                      {item.nom_original.length > 20
-                        ? item.nom_original.slice(0, 20) +
+                      {item["nomOriginal"].length > 20
+                        ? item["nomOriginal"].slice(0, 20) +
                           "..." +
-                          item.extension
-                        : item.nom_original}
+                          item["extension"]
+                        : item["nomOriginal"]}
                     </Text>
                   </TouchableOpacity>
                 )}
@@ -124,18 +124,18 @@ export default ({ navigation }) => {
                 itemDimension={itemDimension}
                 data={fichiersShared}
                 style={styles.gridView}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={(item) => item["id"].toString()}
                 renderItem={({ item }) => (
                   <TouchableOpacity
                     style={[styles.itemContainerFichier, styles.shadowProp]}
                     onPress={() => {
                       navigation.navigate("Fichier", {
                         type: "Partage",
-                        idFichier: item.id,
+                        idFichier: item["id"],
                       });
                     }}
                   >
-                    {item.extension === "pdf" ? (
+                    {item["extension"] === "pdf" ? (
                       <Image
                         source={{
                           uri: "https://cdn-icons-png.flaticon.com/512/29/29587.png",
@@ -151,7 +151,11 @@ export default ({ navigation }) => {
                       />
                     )}
                     <Text style={styles.itemCodeFichier}>
-                      {item.nom_original}
+                      {item["nomOriginal"].length > 20
+                        ? item["nomOriginal"].slice(0, 20) +
+                          "..." +
+                          item["extension"]
+                        : item["nomOriginal"]}
                     </Text>
                   </TouchableOpacity>
                 )}
