@@ -13,11 +13,13 @@ import MentionsLegalesScreen from "./screens/MentionsLegalesScreen";
 import ProfilScreen from "./screens/ProfilScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import { useUser } from "./components/UserConnexion";
-import ConnexionScreen from "./screens/ConnexionScreen";
+import ConnexionScreen from "./screens/ConnexionNavScreen";
 import FichiersScreen from "./screens/FichiersScreen";
 import FichierScreen from "./screens/FichierScreen";
 import PartagerScreen from "./screens/PartagerScreen";
+import InscriptionScreen from "./screens/connexionScreens/InscriptionScreen";
 // import UpdateProfilScreen from "./screens/UpdateProfilScreen";
+import ForumScreen from "./screens/ForumScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -59,6 +61,22 @@ function BottomTabs() {
                 <Image
                   source={{
                     uri: "https://cdn.icon-icons.com/icons2/1674/PNG/512/filetext_111171.png",
+                  }}
+                  style={{ width: size, height: size, tintColor: "white" }}
+                />
+              ),
+              headerShown: false,
+            }}
+          />
+          <Tab.Screen
+            name="Forum"
+            component={ForumScreen}
+            options={{
+              tabBarLabel: "Forum",
+              tabBarIcon: ({ color, size }) => (
+                <Image
+                  source={{
+                    uri: "https://cdn-icons-png.flaticon.com/512/6456/6456117.png",
                   }}
                   style={{ width: size, height: size, tintColor: "white" }}
                 />
@@ -119,6 +137,11 @@ export default function App() {
             name="Home"
             component={HomeScreen}
             options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Inscription"
+            component={InscriptionScreen}
+            options={{  }}
           />
           <Stack.Screen
             name="A propos"
