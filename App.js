@@ -16,6 +16,7 @@ import { useUser } from "./components/UserConnexion";
 import ConnexionScreen from "./screens/ConnexionScreen";
 import FichiersScreen from "./screens/FichiersScreen";
 import FichierScreen from "./screens/FichierScreen";
+import PartagerScreen from "./screens/PartagerScreen";
 // import UpdateProfilScreen from "./screens/UpdateProfilScreen";
 
 const Stack = createNativeStackNavigator();
@@ -148,6 +149,11 @@ export default function App() {
             name="Connexion"
             component={ConnexionScreen}
             options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Partager"
+            component={PartagerScreen}
+            options={{ headerShown: true }}
           />
         </Stack.Navigator>
       </NavigationContainer>

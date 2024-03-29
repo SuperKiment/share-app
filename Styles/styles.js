@@ -82,6 +82,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#158CBA",
     padding: 12,
     borderRadius: 5,
+    marginTop: 20,
+    marginLeft: 10,
+    marginRight: 10,
   },
   textePetitBouton: {
     color: "white",
@@ -193,6 +196,13 @@ const styles = StyleSheet.create({
     padding: 16,
     marginLeft: 40,
     marginRight: 40,
+  },
+
+  picker2: {
+    backgroundColor: "#158CBA",
+    padding: 16,
+    marginLeft: 10,
+    marginRight: 10,
   },
 
   gridViewFichiers: {

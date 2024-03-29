@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from "react-native";
 import styles from "../Styles/styles";
 import Header from "../components/Header";
 import { nuage } from "../config/config";
@@ -10,7 +10,7 @@ function formatDate(dateString) {
   return date.toLocaleDateString("fr-FR", options); // Formater la date selon les options
 }
 
-export default ({ route }) => {
+export default ({ route, navigation }) => {
   const { idFichier } = route.params;
   const { type } = route.params;
   const [fichier, setFichier] = useState({});
@@ -18,7 +18,7 @@ export default ({ route }) => {
 
   useEffect(() => {
     getFichierById(idFichier);
-  }, []);
+  });
 
   const getFichierById = async (idFichier) => {
     const data = await fetch(
@@ -33,7 +33,7 @@ export default ({ route }) => {
     // }
   };
 
-  console.log(fichier);
+  // console.log(fichier);
   return (
     <View style={styles.body}>
       {loading ? (
@@ -41,7 +41,7 @@ export default ({ route }) => {
           <Text>Chargement en cours...</Text>
         </View>
       ) : (
-        <View style={styles.blueContainer}>
+        <ScrollView style={styles.blueContainer}>
           <View style={styles.ecart}>
             <Text style={styles.blueTitre}>{fichier["nomOriginal"]}</Text>
             <Text style={styles.ProfilTexte}>
@@ -110,7 +110,13 @@ export default ({ route }) => {
                     <Text style={styles.ProfilTexte}>Aucun partage</Text>
                   </View>
                 )}
-            <TouchableOpacity style={styles.petitBouton}>
+            <TouchableOpacity style={styles.petitBouton}onPress={() => {
+                    // console.log("hello");
+                      navigation.navigate("Partager", {
+                        type: "Fichier",
+                        idFichier: fichier["id"],
+                      });
+                    }}>
                 <Text style={styles.textePetitBouton}>Partager</Text>
             </TouchableOpacity>
               </>
@@ -118,7 +124,7 @@ export default ({ route }) => {
               <View></View>
             )}
           </View>
-        </View>
+        </ScrollView>
       )}
     </View>
   );
