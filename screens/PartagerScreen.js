@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from "rea
 import { Picker } from "@react-native-picker/picker";
 import styles from "../Styles/styles";
 import Header from "../components/Header";
-import { nuage } from "../config/config";
+import { nuage, IRInuage } from "../config/config";
 import { FlatGrid } from "react-native-super-grid";
 
 export default ({ route }) => {
@@ -48,7 +48,7 @@ export default ({ route }) => {
   const Partager = async () => {
     if (utilisateurs["hydra:member"][selectedValue] != undefined) {
       let id = utilisateurs["hydra:member"][selectedValue].id;
-      let userIRI = `/Share/api/users/${id}`;
+      let userIRI = `${IRInuage}api/users/${id}`;
       let fichierResponse = await fetch(nuage + "api/fichiers/" + idFichier);
       let fichierData = await fichierResponse.json();
       let userTab = [];
@@ -70,9 +70,6 @@ export default ({ route }) => {
         .then(function (response) {
           return response.json();
         })
-        .then(function (data) {
-          console.log(data);
-        });
       getFichierById(idFichier);
       setLoading(false);
     }
@@ -90,9 +87,7 @@ export default ({ route }) => {
             <Text style={styles.blueTitre}>{fichier["nomOriginal"]}</Text>
             <Text style={styles.ProfilTexte}>
               <Text style={styles.gras}>Propriétaire : </Text>
-              {fichier.proprietaire != undefined ? fichier.proprietaire.lastname : "fuck" +
-                " " +
-                fichier.proprietaire != undefined ? fichier.proprietaire.firstname : "fuck"}
+              {fichier.proprietaire ? fichier.proprietaire.lastname + " " + fichier.proprietaire.firstname : ''}
             </Text>
             <Text style={styles.ProfilTexte}>
               <Text style={styles.gras}>Taille : </Text>{" "}
@@ -104,14 +99,14 @@ export default ({ route }) => {
                 <Text style={styles.ProfilTexte}>
                   <Text style={styles.gras}>Partagé à : </Text>
                 </Text>
-                {fichier["user"].length > 0 ? (
+                {fichier["user"] && fichier["user"].length > 0 ? (
                   <View style={styles.categorieContainer}>
                     <Text style={styles.ProfilTexte}>
                       {fichier["user"].map((user, index) => (
                         <React.Fragment key={index}>
                           <Text>{"\u2022"} </Text>
                           <Text>
-                            {user != undefined ?user.lastname :"fuck"} {user != undefined ?user.firstname :"fuck"}
+                          {user && user.lastname} {user && user.firstname}
                             {"\n"}
                           </Text>
                         </React.Fragment>

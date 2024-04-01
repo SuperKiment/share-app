@@ -4,3 +4,4 @@
 //export 
 
 export const nuage = "https://TonNuage.nuage-peda.fr/TonDossierShare/";
+export const IRInuage = "/TonDossierShare/"; //Ne pas oublier les "/" et si c'est /ShareFinal/Share/ il faut bien mettre les 2

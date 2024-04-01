@@ -1,5 +1,12 @@
 import React, { useContext, useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import styles from "../Styles/styles";
 import Header from "../components/Header";
 import { nuage } from "../config/config";
@@ -21,19 +28,39 @@ export default ({ route, navigation }) => {
   });
 
   const getFichierById = async (idFichier) => {
-    const data = await fetch(
-      nuage + "api/fichiers/" + idFichier
-    );
+    const data = await fetch(nuage + "api/fichiers/" + idFichier);
     const dataJSON = await data.json();
     setFichier(dataJSON);
     setLoading(false);
-
-    // if (dataJSON.length > 0) {
-    //   console.log("couocu");
-    // }
   };
 
-  // console.log(fichier);
+  const revoquer = async (idUser) => {
+      let fichierResponse = await fetch(nuage + "api/fichiers/" + idFichier);
+      let fichierData = await fichierResponse.json();
+      let userTab = [];
+      let userIds = fichierData.user.map(user => {
+        let id = user["@id"];
+        if (id.split("/").pop() != idUser){
+          userTab.push(id);
+        }
+      });  
+      const data = await fetch(nuage + "api/fichiers/" + idFichier, {
+        headers: {
+          Accept: "application/ld+json",
+          "Content-Type": "application/merge-patch+json",
+        },
+        method: "PATCH",
+        body: JSON.stringify({
+          user: userTab,
+        }),
+      })
+        .then(function (response) {
+          return response.json();
+        })
+      getFichierById(idFichier);
+      setLoading(false);
+  };
+
   return (
     <View style={styles.body}>
       {loading ? (
@@ -92,12 +119,24 @@ export default ({ route, navigation }) => {
                   <Text style={styles.gras}>Partagé à : </Text>
                 </Text>
                 {fichier["user"].length > 0 ? (
-                  <View style={styles.categorieContainer}>
-                    <Text style={styles.ProfilTexte}>
+                  <View style={[styles.categorieContainer]}>
+                    <Text style={styles.Margin}>
                       {fichier["user"].map((user, index) => (
                         <React.Fragment key={index}>
-                          <Text>{"\u2022"} </Text>
-                          <Text>
+                          <TouchableOpacity
+                            onPress={() => {
+                              {
+                                let id = user["@id"].split("/").pop();
+                                revoquer(id);
+                              }
+                            }}
+                            style={styles.petitBouton}
+                            >
+                            <Text style={styles.textePetitBouton}>
+                              X
+                            </Text>
+                          </TouchableOpacity>
+                          <Text style={styles.PersonneTexte}>
                             {user["lastname"]} {user["firstname"]}
                             {"\n"}
                           </Text>
@@ -110,15 +149,17 @@ export default ({ route, navigation }) => {
                     <Text style={styles.ProfilTexte}>Aucun partage</Text>
                   </View>
                 )}
-            <TouchableOpacity style={styles.petitBouton}onPress={() => {
-                    // console.log("hello");
-                      navigation.navigate("Partager", {
-                        type: "Fichier",
-                        idFichier: fichier["id"],
-                      });
-                    }}>
-                <Text style={styles.textePetitBouton}>Partager</Text>
-            </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.petitBouton}
+                  onPress={() => {
+                    navigation.navigate("Partager", {
+                      type: "Fichier",
+                      idFichier: fichier["id"],
+                    });
+                  }}
+                >
+                  <Text style={styles.textePetitBouton}>Partager</Text>
+                </TouchableOpacity>
               </>
             ) : (
               <View></View>

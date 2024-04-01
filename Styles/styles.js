@@ -107,6 +107,15 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     color: "white",
   },
+  PersonneTexte: {
+    fontSize: 22,
+    color: "white",
+  },
+  Margin: {
+    margin: "auto",
+    flexDirection: "row",
+    alignItems: "center",
+  },
   mentions: {
     fontSize: 20,
     color: "white",
@@ -196,6 +205,7 @@ const styles = StyleSheet.create({
     padding: 16,
     marginLeft: 40,
     marginRight: 40,
+    color: "white",
   },
 
   picker2: {
@@ -203,6 +213,8 @@ const styles = StyleSheet.create({
     padding: 16,
     marginLeft: 10,
     marginRight: 10,
+    borderRadius: 10,
+    color: "white",
   },
 
   gridViewFichiers: {
