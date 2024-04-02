@@ -70,37 +70,36 @@ export default ({ route, navigation }) => {
       ) : (
         <ScrollView style={styles.blueContainer}>
           <View style={styles.ecart}>
-            <Text style={styles.blueTitre}>{fichier["nomOriginal"]}</Text>
+            <Text style={styles.blueTitre}>{fichier.nomOriginal}</Text>
             <Text style={styles.ProfilTexte}>
-              <Text style={styles.gras}>Extension : </Text>{" "}
-              {fichier["extension"]}
+              <Text style={styles.gras}>Extension : </Text> {fichier.extension}
             </Text>
             <Text style={styles.ProfilTexte}>
               <Text style={styles.gras}>Date d'envoi : </Text>
-              {fichier["dateEnvoi"] && formatDate(fichier["dateEnvoi"])}
+              {fichier.dateEnvoi && formatDate(fichier.dateEnvoi)}
             </Text>
             <Text style={styles.ProfilTexte}>
               <Text style={styles.gras}>Propriétaire : </Text>
-              {fichier["proprietaire"]["lastname"] +
+              {fichier.proprietaire.lastname +
                 " " +
-                fichier["proprietaire"]["firstname"]}
+                fichier.proprietaire.firstname}
             </Text>
             <Text style={styles.ProfilTexte}>
               <Text style={styles.gras}>Taille : </Text>{" "}
-              {Math.round(fichier["taille"] / 1024)} kilo-octets
+              {Math.round(fichier.taille / 1024)} kilo-octets
             </Text>
 
             <Text style={styles.ProfilTexte}>
               <Text style={styles.gras}>Catégorie : </Text>
             </Text>
-            {fichier["categories"].length > 0 ? (
+            {fichier.categories.length > 0 ? (
               <View style={styles.categorieContainer}>
                 <Text style={styles.ProfilTexte}>
-                  {fichier["categories"].map((categorie, index) => (
+                  {fichier.categories.map((categorie, index) => (
                     <React.Fragment key={index}>
                       <Text>{"\u2022"} </Text>
                       <Text>
-                        {categorie["libelle"]}
+                        {categorie.libelle}
                         {"\n"}
                       </Text>
                     </React.Fragment>

@@ -20,6 +20,7 @@ import PartagerScreen from "./screens/PartagerScreen";
 import InscriptionScreen from "./screens/connexionScreens/InscriptionScreen";
 // import UpdateProfilScreen from "./screens/UpdateProfilScreen";
 import ForumScreen from "./screens/ForumScreen";
+import MessageScreen from "./screens/MessageScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -151,6 +152,16 @@ export default function App() {
           <Stack.Screen
             name="Fichier"
             component={FichierScreen}
+            options={{ headerShown: true }}
+          />
+          <Stack.Screen
+            name="Forum"
+            component={ForumScreen}
+            options={{ headerShown: true }}
+          />
+          <Stack.Screen
+            name="Sujet"
+            component={MessageScreen}
             options={{ headerShown: true }}
           />
           <Stack.Screen

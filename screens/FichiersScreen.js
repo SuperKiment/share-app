@@ -30,9 +30,7 @@ export default ({ navigation }) => {
   }, []);
 
   const getFichiersById = async () => {
-    const data = await fetch(
-      nuage + "api/fichiers?proprietaire=" + user.id
-    );
+    const data = await fetch(nuage + "api/fichiers?proprietaire=" + user.id);
 
     const dataJSON = await data.json();
     if (dataJSON["hydra:totalItems"] > 0) {
@@ -41,9 +39,7 @@ export default ({ navigation }) => {
   };
 
   const getFichiersShared = async () => {
-    const data = await fetch(
-      nuage + "api/fichiers?user=" + user.id
-    );
+    const data = await fetch(nuage + "api/fichiers?user=" + user.id);
 
     const dataJSON = await data.json();
     if (dataJSON["hydra:totalItems"] > 0) {
@@ -83,18 +79,18 @@ export default ({ navigation }) => {
                 itemDimension={itemDimension}
                 data={fichiers}
                 style={styles.gridView}
-                keyExtractor={(item) => item["id"].toString()}
+                keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
                   <TouchableOpacity
                     style={[styles.itemContainerFichier, styles.shadowProp]}
                     onPress={() => {
                       navigation.navigate("Fichier", {
                         type: "Fichier",
-                        idFichier: item["id"],
+                        idFichier: item.id,
                       });
                     }}
                   >
-                    {item["extension"] === "pdf" ? (
+                    {item.extension === "pdf" ? (
                       <Image
                         source={{
                           uri: "https://cdn-icons-png.flaticon.com/512/29/29587.png",
@@ -110,11 +106,9 @@ export default ({ navigation }) => {
                       />
                     )}
                     <Text style={styles.itemCodeFichier}>
-                      {item["nomOriginal"].length > 20
-                        ? item["nomOriginal"].slice(0, 20) +
-                          "..." +
-                          item["extension"]
-                        : item["nomOriginal"]}
+                      {item.nomOriginal.length > 20
+                        ? item.nomOriginal.slice(0, 20) + "..." + item.extension
+                        : item.nomOriginal}
                     </Text>
                   </TouchableOpacity>
                 )}
@@ -125,18 +119,18 @@ export default ({ navigation }) => {
                 itemDimension={itemDimension}
                 data={fichiersShared}
                 style={styles.gridView}
-                keyExtractor={(item) => item["id"].toString()}
+                keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
                   <TouchableOpacity
                     style={[styles.itemContainerFichier, styles.shadowProp]}
                     onPress={() => {
                       navigation.navigate("Fichier", {
                         type: "Partage",
-                        idFichier: item["id"],
+                        idFichier: item.id,
                       });
                     }}
                   >
-                    {item["extension"] === "pdf" ? (
+                    {item.extension === "pdf" ? (
                       <Image
                         source={{
                           uri: "https://cdn-icons-png.flaticon.com/512/29/29587.png",
@@ -152,11 +146,9 @@ export default ({ navigation }) => {
                       />
                     )}
                     <Text style={styles.itemCodeFichier}>
-                      {item["nomOriginal"].length > 20
-                        ? item["nomOriginal"].slice(0, 20) +
-                          "..." +
-                          item["extension"]
-                        : item["nomOriginal"]}
+                      {item.nomOriginal.length > 20
+                        ? item.nomOriginal.slice(0, 20) + "..." + item.extension
+                        : item.nomOriginal}
                     </Text>
                   </TouchableOpacity>
                 )}

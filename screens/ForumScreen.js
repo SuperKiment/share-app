@@ -45,34 +45,42 @@ export default ({ navigation }) => {
           <>
             <FlatList
               data={messages}
-              style={styles.gridView}
-              keyExtractor={(item) => item["id"].toString()}
+              style={styles.FlatList}
+              keyExtractor={(item) => item.id.toString()}
+              ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
               renderItem={({ item }) => (
                 <TouchableOpacity
-                  style={[styles.itemContainerFichier, styles.shadowProp]}
+                  style={[
+                    styles.itemContainerFichier,
+                    styles.shadowProp,
+                    styles.flex_row,
+                  ]}
                   onPress={() => {
-                    navigation.navigate("Message", {
-                      type: "Message",
-                      idFichier: item["id"],
+                    navigation.navigate("Sujet", {
+                      idSujet: item.id,
                     });
                   }}
                 >
-                  <Text style={styles.itemCodeFichier}>{item["title"]}</Text>
                   <Image
                     source={{
                       uri: "https://cdn-icons-png.flaticon.com/512/6456/6456117.png",
                     }}
                     style={{
                       tintColor: "white",
+                      width: 25,
+                      height: 25,
                     }}
                   />
-                  <Text style={styles.itemCodeFichier}>
-                    {new Date(item["datePost"]).toLocaleTimeString("fr-FR", {
-                      day: "numeric",
-                      month: "long",
-                      year: "numeric",
-                    })}
-                  </Text>
+                  <View style={styles.contenuSujet}>
+                    <Text style={styles.sujetTitle}>{item.title}</Text>
+                    <Text style={styles.SousTitre}>
+                      {new Date(item.datePost).toLocaleTimeString("fr-FR", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </Text>
+                  </View>
                 </TouchableOpacity>
               )}
             />
