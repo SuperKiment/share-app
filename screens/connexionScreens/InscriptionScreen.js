@@ -42,7 +42,7 @@ export default ({ navigation }) => {
     // console.log(json);
     console.log("début fetch");
 
-    const data = await fetch(nuage + "registerapi", {
+    const data = await fetch(nuage + "api/register", {
       method: "POST",
       body: json,
       headers: {
