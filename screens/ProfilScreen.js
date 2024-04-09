@@ -3,6 +3,8 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import { Profil } from "./profilScreens/ProfilScreen";
 import { Modification } from "./profilScreens/ModificationScreen";
+import AboutScreen from "../screens/AboutScreen";
+import MentionsLegalesScreen from "../screens/MentionsLegalesScreen";
 
 const Stack = createStackNavigator();
 
@@ -14,6 +16,16 @@ export default () => {
           name="Profil"
           component={Profil}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="A propos"
+          component={AboutScreen}
+          options={{ headerShown: true }}
+        />
+        <Stack.Screen
+          name="Mentions Légales"
+          component={MentionsLegalesScreen}
+          options={{ headerShown: true }}
         />
         <Stack.Screen
           name="Modification"

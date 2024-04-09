@@ -74,86 +74,116 @@ export default ({ navigation }) => {
           </View>
         ) : (
           <>
-            {selectedValue === "MesFichiers" && (
-              <FlatGrid
-                itemDimension={itemDimension}
-                data={fichiers}
-                style={styles.gridView}
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => (
-                  <TouchableOpacity
-                    style={[styles.itemContainerFichier, styles.shadowProp]}
-                    onPress={() => {
-                      navigation.navigate("Fichier", {
-                        type: "Fichier",
-                        idFichier: item.id,
-                      });
-                    }}
-                  >
-                    {item.extension === "pdf" ? (
-                      <Image
-                        source={{
-                          uri: "https://cdn-icons-png.flaticon.com/512/29/29587.png",
-                        }}
-                        style={{ width: 100, height: 100, tintColor: "white" }}
-                      />
-                    ) : (
-                      <Image
-                        source={{
-                          uri: "https://cdn.icon-icons.com/icons2/1674/PNG/512/filetext_111171.png",
-                        }}
-                        style={{ width: 100, height: 100, tintColor: "white" }}
-                      />
-                    )}
-                    <Text style={styles.itemCodeFichier}>
-                      {item.nomOriginal.length > 20
-                        ? item.nomOriginal.slice(0, 20) + "..." + item.extension
-                        : item.nomOriginal}
-                    </Text>
-                  </TouchableOpacity>
-                )}
-              />
-            )}
-            {selectedValue === "LesPartages" && (
-              <FlatGrid
-                itemDimension={itemDimension}
-                data={fichiersShared}
-                style={styles.gridView}
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => (
-                  <TouchableOpacity
-                    style={[styles.itemContainerFichier, styles.shadowProp]}
-                    onPress={() => {
-                      navigation.navigate("Fichier", {
-                        type: "Partage",
-                        idFichier: item.id,
-                      });
-                    }}
-                  >
-                    {item.extension === "pdf" ? (
-                      <Image
-                        source={{
-                          uri: "https://cdn-icons-png.flaticon.com/512/29/29587.png",
-                        }}
-                        style={{ width: 100, height: 100, tintColor: "white" }}
-                      />
-                    ) : (
-                      <Image
-                        source={{
-                          uri: "https://cdn.icon-icons.com/icons2/1674/PNG/512/filetext_111171.png",
-                        }}
-                        style={{ width: 100, height: 100, tintColor: "white" }}
-                      />
-                    )}
-                    <Text style={styles.itemCodeFichier}>
-                      {item.nomOriginal.length > 20
-                        ? item.nomOriginal.slice(0, 20) + "..." + item.extension
-                        : item.nomOriginal}
-                    </Text>
-                  </TouchableOpacity>
-                )}
-              />
-            )}
+            {selectedValue === "MesFichiers" &&
+              (fichiers.length > 0 ? (
+                <FlatGrid
+                  itemDimension={itemDimension}
+                  data={fichiers}
+                  style={styles.gridView}
+                  keyExtractor={(item) => item.id.toString()}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity
+                      style={[styles.itemContainerFichier, styles.shadowProp]}
+                      onPress={() => {
+                        navigation.navigate("Fichier", {
+                          type: "Fichier",
+                          idFichier: item.id,
+                        });
+                      }}
+                    >
+                      {item.extension === "pdf" ? (
+                        <Image
+                          source={{
+                            uri: "https://cdn-icons-png.flaticon.com/512/29/29587.png",
+                          }}
+                          style={{
+                            width: 100,
+                            height: 100,
+                            tintColor: "white",
+                          }}
+                        />
+                      ) : (
+                        <Image
+                          source={{
+                            uri: "https://cdn.icon-icons.com/icons2/1674/PNG/512/filetext_111171.png",
+                          }}
+                          style={{
+                            width: 100,
+                            height: 100,
+                            tintColor: "white",
+                          }}
+                        />
+                      )}
+                      <Text style={styles.itemCodeFichier}>
+                        {item.nomOriginal.length > 20
+                          ? item.nomOriginal.slice(0, 20) +
+                            "..." +
+                            item.extension
+                          : item.nomOriginal}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                />
+              ) : (
+                <View style={[styles.loadingContainer]}>
+                  <Text>Pas de fichier</Text>
+                </View>
+              ))}
+            {selectedValue === "LesPartages" &&
+              (fichiersShared.length > 0 ? (
+                <FlatGrid
+                  itemDimension={itemDimension}
+                  data={fichiersShared}
+                  style={styles.gridView}
+                  keyExtractor={(item) => item.id.toString()}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity
+                      style={[styles.itemContainerFichier, styles.shadowProp]}
+                      onPress={() => {
+                        navigation.navigate("Fichier", {
+                          type: "Partage",
+                          idFichier: item.id,
+                        });
+                      }}
+                    >
+                      {item.extension === "pdf" ? (
+                        <Image
+                          source={{
+                            uri: "https://cdn-icons-png.flaticon.com/512/29/29587.png",
+                          }}
+                          style={{
+                            width: 100,
+                            height: 100,
+                            tintColor: "white",
+                          }}
+                        />
+                      ) : (
+                        <Image
+                          source={{
+                            uri: "https://cdn.icon-icons.com/icons2/1674/PNG/512/filetext_111171.png",
+                          }}
+                          style={{
+                            width: 100,
+                            height: 100,
+                            tintColor: "white",
+                          }}
+                        />
+                      )}
+                      <Text style={styles.itemCodeFichier}>
+                        {item.nomOriginal.length > 20
+                          ? item.nomOriginal.slice(0, 20) +
+                            "..." +
+                            item.extension
+                          : item.nomOriginal}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                />
+              ) : (
+                <View style={[styles.loadingContainer]}>
+                  <Text>Pas de fichier partagé avec vous</Text>
+                </View>
+              ))}
           </>
         )}
       </View>

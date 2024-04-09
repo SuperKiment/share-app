@@ -30,6 +30,14 @@ export default () => {
           </Text>{" "}
           de manière sécurisée et efficace.
         </Text>
+        <Text style={styles.description}>
+          "Share" propose également un espace d'échange sous forme de forum
+          visant aussi à faciliter{" "}
+          <Text style={[styles.gras, styles.italic]}>
+            l'échange entre utilisateurs
+          </Text>{" "}
+          de manière sécurisée et efficace.
+        </Text>
         <TouchableOpacity style={styles.bouton}>
           <Text style={styles.texteBouton}>Partager</Text>
         </TouchableOpacity>

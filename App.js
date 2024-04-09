@@ -21,6 +21,7 @@ import InscriptionScreen from "./screens/connexionScreens/InscriptionScreen";
 // import UpdateProfilScreen from "./screens/UpdateProfilScreen";
 import ForumScreen from "./screens/ForumScreen";
 import MessageScreen from "./screens/MessageScreen";
+import NewSujetScreen from "./screens/NewSujetScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -142,7 +143,7 @@ export default function App() {
           <Stack.Screen
             name="Inscription"
             component={InscriptionScreen}
-            options={{  }}
+            options={{}}
           />
           <Stack.Screen
             name="A propos"
@@ -182,6 +183,11 @@ export default function App() {
           <Stack.Screen
             name="Connexion"
             component={ConnexionScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Nouveau Sujet"
+            component={NewSujetScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen
