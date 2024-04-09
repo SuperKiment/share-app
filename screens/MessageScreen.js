@@ -1,14 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { View, ScrollView, Text, FlatList, Image } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import {
+  Button,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import styles from "../Styles/styles";
-import { nuage } from "../config/config";
+import { IRInuage, nuage } from "../config/config";
+import { UserContext } from "../components/UserConnexion";
 
-export default ({ route }) => {
+export default ({ route, navigation }) => {
   const { idSujet } = route.params;
   const [sujet, setSujet] = useState({});
   const [messages, setMessages] = useState([]);
   const [loadingM, setLoadingM] = useState(true);
   const [loadingS, setLoadingS] = useState(true);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     getSujet(idSujet);
@@ -27,6 +36,8 @@ export default ({ route }) => {
     const dataJSON = await data.json();
     if (dataJSON["hydra:totalItems"] > 0) {
       setMessages(dataJSON["hydra:member"]);
+      // console.log(dataJSON["hydra:member"][0].user["@id"]);
+      // console.log(IRInuage + "api/users/" + user.id);
       setLoadingM(false);
     }
   };
@@ -70,7 +81,26 @@ export default ({ route }) => {
                     <Text style={styles.messageTitle}>{message.title}</Text>
                     <Text style={styles.messageElement}>{message.content}</Text>
                     <Text style={styles.messageElement}>
-                      Par {message.user.lastname} {message.user.firstname}
+                      {message.user["@id"] ==
+                      IRInuage + "api/users/" + user.id ? (
+                        <>
+                          <View>
+                            <Text style={styles.messageElement}>Par vous</Text>
+                            <Button
+                              title="Modifier"
+                              onPress={() => {
+                                navigation.navigate("ModifierMessage", {
+                                  message: message,
+                                });
+                              }}
+                            />
+                          </View>
+                        </>
+                      ) : (
+                        <>
+                          Par {message.user.lastname} {message.user.firstname}
+                        </>
+                      )}
                     </Text>
                   </View>
                 </View>
