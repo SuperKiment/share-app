@@ -17,7 +17,6 @@ import Header from "../components/Header";
 export default ({ navigation }) => {
   const { user } = useUser();
 
-  console.log(user);
   const FormulaireAddSujet = () => {
     const [contentSujet, setContentSujet] = useState("");
     const [titleSujet, setTitleSujet] = useState("");
@@ -60,9 +59,6 @@ export default ({ navigation }) => {
         alert("Pas bon");
       }
     };
-
-    console.log(titleSujet);
-    console.log(contentSujet);
 
     return (
       <>

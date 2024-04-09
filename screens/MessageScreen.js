@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { View, ScrollView, Text, FlatList, Image } from "react-native";
 import styles from "../Styles/styles";
 import { nuage } from "../config/config";
-import { nuage2 } from "../config/config";
 
 export default ({ route }) => {
   const { idSujet } = route.params;
@@ -17,14 +16,14 @@ export default ({ route }) => {
   }, []);
 
   const getSujet = async (idSujet) => {
-    const data = await fetch(nuage2 + "api/messages/" + idSujet);
+    const data = await fetch(nuage + "api/messages/" + idSujet);
     const dataJSON = await data.json();
     setSujet(dataJSON);
     setLoadingS(false);
   };
 
   const getMessagesBySujet = async (idSujet) => {
-    const data = await fetch(nuage2 + "api/messages?parent=" + idSujet);
+    const data = await fetch(nuage + "api/messages?parent=" + idSujet);
     const dataJSON = await data.json();
     if (dataJSON["hydra:totalItems"] > 0) {
       setMessages(dataJSON["hydra:member"]);
