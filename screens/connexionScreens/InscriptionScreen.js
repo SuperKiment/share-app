@@ -21,9 +21,7 @@ export default ({ navigation }) => {
     if (email == "" || nom == "" || prenom == "" || mdp == "") return;
 
     setChargement(true);
-
-    const token =
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MTE2MzkzMDUsImV4cCI6MTcxMTY0MjkwNSwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6Im1lbGFuaWUuYm91ZHJ5QGVjb2xlcy1lcHNpLm5ldCJ9.hw5Rz9_9MN3ut3QCZln_JHFzxWJY-yv3pmiDVGccNRRUEhrPHpbGT0PZF1VhEf1eCl5A7nzt2KOlSbSldLVrdVIM8sWqt-EIyLugs1t95yR4gYsVCOoU0zD9XPIQbHPtIUpHM9AeNbLkvfrRe3kft-xvgakeWv453jH107Lc4Qp3ipKIbwxLF6maUvUC1ppg8zPcAGRIXzpHTFll0FeVAf_pHd53CYmy3PbOuYdVr870tvPapbJn3XbOWvCB3Pk6eBSIQb1kXCfvbUPkDCiX6kxTQBRGgZjPgnbp9gf1TJOK9QGQyg6Ls1g5-88wi387sROfuL9BOHg2rglNHzKFsg";
+    // console.log("début");
 
     const json = JSON.stringify({
       email: email,
@@ -39,24 +37,41 @@ export default ({ navigation }) => {
       messages: [],
     });
 
-    // console.log(json);
+    // console.log("json ok");
 
-    const data = await fetch(nuage + "api/users", {
+    // console.log(json);
+    // console.log("début fetch");
+
+    const data = await fetch(nuage + "api/register", {
       method: "POST",
       body: json,
       headers: {
         "Content-type": "application/ld+json",
-        Authorization: `Bearer ${token}`,
         accept: "application/ld+json",
       },
     });
 
-    const dataJSON = await data.json();
+    // console.log("fecth ok");
+    
+    try {
+      const dataJSON = await data.json();
+      // console.log(dataJSON);
+      setMessage(await dataJSON["hydra:title"]);
 
-    if (dataJSON["hydra:description"] != undefined)
+      if (await dataJSON["hydra:title"] == "success") {
+        navigation.navigate("Connexion")
+      }
+    } catch (e) {
+      // console.log(e);
+      setMessage("Unexpected error");
+    }
+
+    /*
+    if (dataJSON != null && dataJSON["hydra:description"] != undefined)
       setMessage(dataJSON["hydra:description"]);
 
     console.log(dataJSON);
+    */
     setChargement(false);
   };
 
