@@ -153,7 +153,8 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
-    alignItems: "flex-end",
+    alignItems: "center",
+    justifyContent: "space-between",
     marginHorizontal: 5,
   },
 
@@ -339,6 +340,32 @@ const styles = StyleSheet.create({
   },
   noMessagesText: {
     fontSize: 16,
+  },
+
+  TextInput: {
+    borderColor: "white",
+    borderWidth: 1,
+    height: 50,
+    padding: 10,
+    color: "white",
+    fontSize: 22,
+    marginBottom: 20,
+    borderRadius: 10,
+    
+  },
+
+  minitexteBouton: {
+    color: "white",
+    fontSize: 15,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+
+  boutonAdd: {
+    backgroundColor: "#158CBA",
+    padding: 16,
+    borderRadius: 25,
+    margin: 10,
   },
 });
 

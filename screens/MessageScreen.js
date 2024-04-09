@@ -52,7 +52,7 @@ export default ({ route }) => {
               })}
             </Text>
             <Text style={styles.sujetElement}>
-              Par {sujet.user.lastname} {sujet.userfirstname}
+              Par {sujet.user.lastname} {sujet.user.firstname}
             </Text>
           </View>
 

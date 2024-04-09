@@ -36,9 +36,18 @@ export default ({ navigation }) => {
           <View style={styles.ecart}>
             <Text style={styles.blueTitre}>Forum</Text>
           </View>
+          <TouchableOpacity
+            style={[styles.boutonAdd]}
+            onPress={() => {
+              navigation.navigate("Nouveau Sujet", {});
+            }}
+          >
+            <Text style={styles.minitexteBouton}>Ajouter un nouveau sujet</Text>
+          </TouchableOpacity>
         </View>
+
         {loading ? (
-          <View style={styles.body}>
+          <View style={[styles.loadingContainer]}>
             <Text>Chargement en cours...</Text>
           </View>
         ) : (
