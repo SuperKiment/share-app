@@ -21,7 +21,7 @@ export default ({ navigation }) => {
     if (email == "" || nom == "" || prenom == "" || mdp == "") return;
 
     setChargement(true);
-    console.log("début");
+    // console.log("début");
 
     const json = JSON.stringify({
       email: email,
@@ -37,10 +37,10 @@ export default ({ navigation }) => {
       messages: [],
     });
 
-    console.log("json ok");
+    // console.log("json ok");
 
     // console.log(json);
-    console.log("début fetch");
+    // console.log("début fetch");
 
     const data = await fetch(nuage + "api/register", {
       method: "POST",
@@ -51,18 +51,18 @@ export default ({ navigation }) => {
       },
     });
 
-    console.log("fecth ok");
+    // console.log("fecth ok");
     
     try {
       const dataJSON = await data.json();
-      console.log(dataJSON);
+      // console.log(dataJSON);
       setMessage(await dataJSON["hydra:title"]);
 
       if (await dataJSON["hydra:title"] == "success") {
         navigation.navigate("Connexion")
       }
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       setMessage("Unexpected error");
     }
 
