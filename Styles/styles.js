@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: 150,
+    marginTop: 10,
   },
   row: {
     flexDirection: "row",
@@ -351,7 +351,6 @@ const styles = StyleSheet.create({
     fontSize: 22,
     marginBottom: 20,
     borderRadius: 10,
-    
   },
 
   minitexteBouton: {

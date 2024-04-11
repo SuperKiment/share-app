@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { View, FlatList, Text, TouchableOpacity, Image } from "react-native";
+import { nuage } from "../config/config";
+import { useFocusEffect } from "@react-navigation/native";
 
 import { FlatGrid } from "react-native-super-grid";
 
@@ -15,13 +17,10 @@ export default ({ navigation }) => {
   useEffect(() => {
     getMessages();
     setLoading(false);
-  }, []);
+  });
 
   const getMessages = async () => {
-    const data = await fetch(
-      "https://s4-8057.nuage-peda.fr/share/api/messages?exists%5Bparent%5D=false"
-    );
-
+    const data = await fetch(nuage + "api/messages?exists%5Bparent%5D=false");
     const dataJSON = await data.json();
     if (dataJSON["hydra:totalItems"] > 0) {
       setMessages(dataJSON["hydra:member"]);

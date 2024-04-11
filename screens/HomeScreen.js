@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import styles from "../Styles/styles";
 import Header from "../components/Header";
 
@@ -9,7 +16,7 @@ export default () => {
   return (
     <View style={styles.body}>
       <Header />
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <Text style={styles.titre}>Accueil</Text>
         <Text style={styles.description}>
           Une application mobile révolutionnaire conçue pour{" "}
@@ -41,7 +48,7 @@ export default () => {
         <TouchableOpacity style={styles.bouton}>
           <Text style={styles.texteBouton}>Partager</Text>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     </View>
   );
 };

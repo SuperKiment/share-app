@@ -52,7 +52,10 @@ export default ({ route }) => {
               })}
             </Text>
             <Text style={styles.sujetElement}>
-              Par {sujet.user.lastname} {sujet.user.firstname}
+              Par{" "}
+              {sujet.user
+                ? sujet.user.lastname + " " + sujet.user.firstname
+                : ""}
             </Text>
           </View>
 
@@ -70,7 +73,10 @@ export default ({ route }) => {
                     <Text style={styles.messageTitle}>{message.title}</Text>
                     <Text style={styles.messageElement}>{message.content}</Text>
                     <Text style={styles.messageElement}>
-                      Par {message.user.lastname} {message.user.firstname}
+                      Par{" "}
+                      {message.user
+                        ? message.user.lastname + " " + message.user.firstname
+                        : ""}
                     </Text>
                   </View>
                 </View>

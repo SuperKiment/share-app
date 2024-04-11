@@ -44,6 +44,33 @@ export default () => {
     },
   ];
 
+  const LesCreateurs = () => {
+    return (
+      <>
+        <FlatGrid
+          itemDimension={itemDimension}
+          data={createurs}
+          style={styles.gridView}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item, index }) => (
+            <TouchableOpacity
+              onPress={() => {
+                Linking.openURL(item.url);
+              }}
+              style={[
+                styles.itemContainer,
+                { backgroundColor: item.backgroundColor },
+              ]}
+            >
+              <Text style={styles.itemName}>{item.title}</Text>
+              <Text style={styles.itemCode}>{item.role}</Text>
+            </TouchableOpacity>
+          )}
+        />
+      </>
+    );
+  };
+
   const itemDimension = (Dimensions.get("window").width - 100) / 2 - 20;
 
   return (
@@ -55,28 +82,7 @@ export default () => {
           projet rentre dans le cadre de notre Epreuve E5 de BTS SIO (option
           SLAM).
         </Text>
-        {
-          <FlatGrid
-            itemDimension={itemDimension}
-            data={createurs}
-            style={styles.gridView}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item, index }) => (
-              <TouchableOpacity
-                onPress={() => {
-                  Linking.openURL(item.url);
-                }}
-                style={[
-                  styles.itemContainer,
-                  { backgroundColor: item.backgroundColor },
-                ]}
-              >
-                <Text style={styles.itemName}>{item.title}</Text>
-                <Text style={styles.itemCode}>{item.role}</Text>
-              </TouchableOpacity>
-            )}
-          />
-        }
+        <LesCreateurs />
       </View>
     </View>
   );

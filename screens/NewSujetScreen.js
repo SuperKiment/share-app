@@ -1,16 +1,7 @@
-import React, { useContext, useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  TextInput,
-} from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, TouchableOpacity, TextInput } from "react-native";
 import styles from "../Styles/styles";
-import { nuage } from "../config/config";
-import { IRInuage } from "../config/config";
+import { nuage, IRInuage } from "../config/config";
 import { useUser } from "../components/UserConnexion";
 import Header from "../components/Header";
 
@@ -18,45 +9,42 @@ export default ({ navigation }) => {
   const { user } = useUser();
 
   const FormulaireAddSujet = () => {
+    const token = user.token;
     const [contentSujet, setContentSujet] = useState("");
     const [titleSujet, setTitleSujet] = useState("");
 
     const addSujet = async () => {
-      try {
-        if (contentSujet != "" && titleSujet != "") {
-          const url = await fetch(nuage + "api/messages");
-          let idProprietaire = user["id"];
-          const currentDate = new Date();
-          const isoDateString = currentDate.toISOString();
+      if (contentSujet != "" && titleSujet != "") {
+        let idProprietaire = user["id"];
+        const currentDate = new Date();
+        let userIRI = `${IRInuage}api/users/${idProprietaire}`;
 
-          const response = await fetch(url, {
-            headers: {
-              Accept: "application/ld+json",
-              "Content-Type": "application/merge-patch+json",
-            },
-            method: "POST",
-            body: JSON.stringify({
-              title: titleSujet,
-              DatePost: isoDateString,
-              content: contentSujet,
-              user: IRInuage + "api/users/" + idProprietaire,
-            }),
+        const data = await fetch(nuage + "api/messages", {
+          headers: {
+            Accept: "application/ld+json",
+            "Content-Type": "application/ld+json",
+            Authorization: `Bearer ${token}`,
+          },
+          method: "POST",
+          body: JSON.stringify({
+            title: titleSujet,
+            datePost: currentDate,
+            content: contentSujet,
+            user: userIRI,
+            messages: [],
+          }),
+        })
+          .then(function (response) {
+            console.log(response);
+            navigation.goBack();
+            return response.json();
           })
-            .then(function (response) {
-              console.log("c'est bon");
-              navigation.goBack();
-              return response.json();
-            })
-            .catch((error) => {
-              console.log(error);
-              alert(error);
-            });
-        } else {
-          alert("un ou des champs sont vides");
-        }
-      } catch (error) {
-        console.error(error);
-        alert("Pas bon");
+          .catch((error) => {
+            console.log(error);
+            alert(error);
+          });
+      } else {
+        alert("un ou des champs sont vides");
       }
     };
 

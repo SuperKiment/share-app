@@ -1,12 +1,5 @@
-import React, { useContext, useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import styles from "../Styles/styles";
 import Header from "../components/Header";
 import { nuage } from "../config/config";
@@ -35,30 +28,29 @@ export default ({ route, navigation }) => {
   };
 
   const revoquer = async (idUser) => {
-      let fichierResponse = await fetch(nuage + "api/fichiers/" + idFichier);
-      let fichierData = await fichierResponse.json();
-      let userTab = [];
-      let userIds = fichierData.user.map(user => {
-        let id = user["@id"];
-        if (id.split("/").pop() != idUser){
-          userTab.push(id);
-        }
-      });  
-      const data = await fetch(nuage + "api/fichiers/" + idFichier, {
-        headers: {
-          Accept: "application/ld+json",
-          "Content-Type": "application/merge-patch+json",
-        },
-        method: "PATCH",
-        body: JSON.stringify({
-          user: userTab,
-        }),
-      })
-        .then(function (response) {
-          return response.json();
-        })
-      getFichierById(idFichier);
-      setLoading(false);
+    let fichierResponse = await fetch(nuage + "api/fichiers/" + idFichier);
+    let fichierData = await fichierResponse.json();
+    let userTab = [];
+    let userIds = fichierData.user.map((user) => {
+      let id = user["@id"];
+      if (id.split("/").pop() != idUser) {
+        userTab.push(id);
+      }
+    });
+    const data = await fetch(nuage + "api/fichiers/" + idFichier, {
+      headers: {
+        Accept: "application/ld+json",
+        "Content-Type": "application/merge-patch+json",
+      },
+      method: "PATCH",
+      body: JSON.stringify({
+        user: userTab,
+      }),
+    }).then(function (response) {
+      return response.json();
+    });
+    getFichierById(idFichier);
+    setLoading(false);
   };
 
   return (
@@ -130,10 +122,8 @@ export default ({ route, navigation }) => {
                               }
                             }}
                             style={styles.petitBouton}
-                            >
-                            <Text style={styles.textePetitBouton}>
-                              X
-                            </Text>
+                          >
+                            <Text style={styles.textePetitBouton}>X</Text>
                           </TouchableOpacity>
                           <Text style={styles.PersonneTexte}>
                             {user["lastname"]} {user["firstname"]}
