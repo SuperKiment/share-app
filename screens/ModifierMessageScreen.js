@@ -1,13 +1,15 @@
 import { Button, Text, TextInput, View } from "react-native";
 import styles from "../Styles/styles";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { nuage } from "../config/config";
+import { UserContext } from "../components/UserConnexion";
 
 export default ({ route, navigation }) => {
   const Formulaire = () => {
     const ancienMessage = route.params.message;
     const [titre, setTitre] = useState(ancienMessage.title);
     const [message, setMessage] = useState(ancienMessage.content);
+    const { user } = useContext(UserContext);
 
     const modifierMessage = async () => {
       if (titre == "" || message == "") return;
@@ -17,6 +19,7 @@ export default ({ route, navigation }) => {
           headers: {
             Accept: "application/ld+json",
             "Content-Type": "application/merge-patch+json",
+            Authorization: `Bearer ${user.token}`,
           },
           method: "PATCH",
           body: JSON.stringify({

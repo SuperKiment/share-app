@@ -17,7 +17,7 @@ export default ({ route, navigation }) => {
   const [messages, setMessages] = useState([]);
   const [loadingM, setLoadingM] = useState(true);
   const [loadingS, setLoadingS] = useState(true);
-  const { user } = useContext(UserContext);
+  const { user, token } = useContext(UserContext);
 
   useEffect(() => {
     getSujet(idSujet);
@@ -42,6 +42,42 @@ export default ({ route, navigation }) => {
     }
   };
 
+  const SupprimerMessage = async (messageSupp) => {
+    console.log("Suppression de", messageSupp);
+    try {
+      const data = await fetch(nuage + "api/messages/" + messageSupp.id, {
+        headers: {
+          Accept: "application/ld+json",
+          "Content-Type": "application/merge-patch+json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        method: "DELETE",
+        body: JSON.stringify({
+          id: messageSupp.id,
+        }),
+      });
+
+      const dataJSON = await data.text();
+      console.log(dataJSON);
+
+      if (dataJSON["@type"] == "hydra:Error") {
+        alert(dataJSON["@type"] + dataJSON.detail);
+      }
+
+      if (dataJSON["@type"] == "Message") {
+        alert("Succès !");
+      }
+
+      if (messageSupp == sujet) {
+        navigation.goBack();
+      } else {
+        getMessagesBySujet(idSujet);
+      }
+    } catch (e) {
+      alert(e);
+    }
+  };
+
   return (
     <View style={[styles.body]}>
       {loadingS ? (
@@ -63,10 +99,35 @@ export default ({ route, navigation }) => {
               })}
             </Text>
             <Text style={styles.sujetElement}>
-              Par{" "}
-              {sujet.user
-                ? sujet.user.lastname + " " + sujet.user.firstname
-                : ""}
+              {sujet.user["@id"] == IRInuage + "api/users/" + user.id ? (
+                <>
+                  <View>
+                    <Text style={styles.messageElement}>Par vous</Text>
+
+                    <View style={{ flexDirection: "row" }}>
+                      <Button
+                        title="Modifier"
+                        onPress={() => {
+                          navigation.navigate("ModifierMessage", {
+                            message: sujet,
+                          });
+                        }}
+                      />
+
+                      <Button
+                        title="Supprimer"
+                        onPress={() => {
+                          SupprimerMessage(sujet);
+                        }}
+                      />
+                    </View>
+                  </View>
+                </>
+              ) : (
+                <>
+                  Par {sujet.user.lastname} {sujet.user.firstname}
+                </>
+              )}
             </Text>
           </View>
 
@@ -89,14 +150,22 @@ export default ({ route, navigation }) => {
                         <>
                           <View>
                             <Text style={styles.messageElement}>Par vous</Text>
-                            <Button
-                              title="Modifier"
-                              onPress={() => {
-                                navigation.navigate("ModifierMessage", {
-                                  message: message,
-                                });
-                              }}
-                            />
+                            <View style={{ flexDirection: "row" }}>
+                              <Button
+                                title="Modifier"
+                                onPress={() => {
+                                  navigation.navigate("ModifierMessage", {
+                                    message: message,
+                                  });
+                                }}
+                              />
+                              <Button
+                                title="Supprimer"
+                                onPress={() => {
+                                  SupprimerMessage(message);
+                                }}
+                              />
+                            </View>
                           </View>
                         </>
                       ) : (
