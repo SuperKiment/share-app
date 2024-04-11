@@ -37,6 +37,7 @@ export default ({ route, navigation }) => {
 
         if (dataJSON["@type"] == "Message") {
           alert("Succès !");
+          navigation.goBack();
         }
       } catch (err) {
         alert(err);

@@ -34,12 +34,59 @@ export default ({ route, navigation }) => {
   const getMessagesBySujet = async (idSujet) => {
     const data = await fetch(nuage + "api/messages?parent=" + idSujet);
     const dataJSON = await data.json();
-    if (dataJSON["hydra:totalItems"] > 0) {
-      setMessages(dataJSON["hydra:member"]);
-      // console.log(dataJSON["hydra:member"][0].user["@id"]);
-      // console.log(IRInuage + "api/users/" + user.id);
-      setLoadingM(false);
-    }
+    // if (dataJSON["hydra:totalItems"] > 0) {
+    setMessages(dataJSON["hydra:member"]);
+    console.log(dataJSON["hydra:member"]);
+    // console.log(dataJSON["hydra:member"][0].user["@id"]);
+    // console.log(IRInuage + "api/users/" + user.id);
+    setLoadingM(false);
+    // }
+  };
+
+  const BoutonsModifierSupprimer = ({ message }) => {
+    return (
+      <View style={{ flexDirection: "row" }}>
+        <TouchableOpacity
+          title="Modifier"
+          onPress={() => {
+            navigation.navigate("ModifierMessage", {
+              message: message,
+            });
+          }}
+        >
+          <Image
+            source={{
+              uri: "https://cdn-icons-png.flaticon.com/512/1250/1250925.png",
+            }}
+            style={{
+              tintColor: "white",
+              width: 25,
+              height: 25,
+              margin: 5,
+            }}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          title="Modifier"
+          onPress={() => {
+            SupprimerMessage(message);
+          }}
+        >
+          <Image
+            source={{
+              uri: "https://cdn-icons-png.flaticon.com/512/484/484611.png",
+            }}
+            style={{
+              tintColor: "white",
+              width: 25,
+              height: 25,
+              margin: 5,
+            }}
+          />
+        </TouchableOpacity>
+      </View>
+    );
   };
 
   const SupprimerMessage = async (messageSupp) => {
@@ -71,7 +118,9 @@ export default ({ route, navigation }) => {
       if (messageSupp == sujet) {
         navigation.goBack();
       } else {
+        getSujet(idSujet);
         getMessagesBySujet(idSujet);
+        console.log("aaaaaaaaaaaaaa");
       }
     } catch (e) {
       alert(e);
@@ -104,23 +153,7 @@ export default ({ route, navigation }) => {
                   <View>
                     <Text style={styles.messageElement}>Par vous</Text>
 
-                    <View style={{ flexDirection: "row" }}>
-                      <Button
-                        title="Modifier"
-                        onPress={() => {
-                          navigation.navigate("ModifierMessage", {
-                            message: sujet,
-                          });
-                        }}
-                      />
-
-                      <Button
-                        title="Supprimer"
-                        onPress={() => {
-                          SupprimerMessage(sujet);
-                        }}
-                      />
-                    </View>
+                    <BoutonsModifierSupprimer message={sujet} />
                   </View>
                 </>
               ) : (
@@ -150,22 +183,7 @@ export default ({ route, navigation }) => {
                         <>
                           <View>
                             <Text style={styles.messageElement}>Par vous</Text>
-                            <View style={{ flexDirection: "row" }}>
-                              <Button
-                                title="Modifier"
-                                onPress={() => {
-                                  navigation.navigate("ModifierMessage", {
-                                    message: message,
-                                  });
-                                }}
-                              />
-                              <Button
-                                title="Supprimer"
-                                onPress={() => {
-                                  SupprimerMessage(message);
-                                }}
-                              />
-                            </View>
+                            <BoutonsModifierSupprimer message={message} />
                           </View>
                         </>
                       ) : (
