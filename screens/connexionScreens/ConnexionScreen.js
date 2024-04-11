@@ -20,8 +20,8 @@ export default ({ navigation }) => {
         {
           method: "POST",
           body: JSON.stringify({
-            email: "melanie.boudry@ecoles-epsi.net",
-            password: "123456789",
+            email: "",
+            password: "",
           }),
           headers: {
             "Content-type": "application/json; charset=UTF-8",
@@ -76,7 +76,7 @@ export default ({ navigation }) => {
   };
 
   const verifyUserDev = async () => {
-    connectUser("melanie.boudry@ecoles-epsi.net", "123456789");
+    connectUser("laurence.leroy@live.com", "laurence");
   };
 
   return (
