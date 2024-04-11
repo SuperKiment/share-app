@@ -42,7 +42,6 @@ export const Modification = ({ navigation }) => {
               token: user.token,
             };
             updateUser(updatedUser);
-            // console.log("Profil utilisateur mis à jour avec succès");
             navigation.goBack();
           } else {
             console.error(
@@ -54,8 +53,6 @@ export const Modification = ({ navigation }) => {
         } else {
           alert("Votre nom ou prénom ne peut pas être vide");
         }
-      } else {
-        // console.log("Pas d'ID utilisateur");
       }
     };
 

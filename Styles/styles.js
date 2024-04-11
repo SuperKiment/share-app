@@ -155,6 +155,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 50,
   },
+
   row: {
     flexDirection: "row",
     alignItems: "center",

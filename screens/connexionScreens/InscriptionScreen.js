@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
-import { View, Text, Button, TextInput, Image } from "react-native";
+import { View, Text, Button, TextInput, Image, TouchableOpacity } from "react-native";
 import Header from "../../components/Header.js";
 import styles from "../../Styles/styles.js";
 import { useUser } from "../../components/UserConnexion.js";
 // import { compare } from "react-native-bcrypt";
 import { nuage } from "../../config/config.js";
-
-// console.log(nuage);
 
 export default ({ navigation }) => {
   [email, setEmail] = useState("");
@@ -21,7 +19,6 @@ export default ({ navigation }) => {
     if (email == "" || nom == "" || prenom == "" || mdp == "") return;
 
     setChargement(true);
-    // console.log("début");
 
     const json = JSON.stringify({
       email: email,
@@ -37,10 +34,6 @@ export default ({ navigation }) => {
       messages: [],
     });
 
-    // console.log("json ok");
-
-    // console.log(json);
-    // console.log("début fetch");
 
     const data = await fetch(nuage + "api/register", {
       method: "POST",
@@ -50,19 +43,15 @@ export default ({ navigation }) => {
         accept: "application/ld+json",
       },
     });
-
-    // console.log("fecth ok");
-
+   
     try {
       const dataJSON = await data.json();
-      // console.log(dataJSON);
       setMessage(await dataJSON["hydra:title"]);
 
       if ((await dataJSON["hydra:title"]) == "success") {
         navigation.navigate("Connexion");
       }
     } catch (e) {
-      // console.log(e);
       setMessage("Unexpected error");
     }
 
@@ -70,7 +59,6 @@ export default ({ navigation }) => {
     if (dataJSON != null && dataJSON["hydra:description"] != undefined)
       setMessage(dataJSON["hydra:description"]);
 
-    console.log(dataJSON);
     */
     setChargement(false);
   };
@@ -78,51 +66,61 @@ export default ({ navigation }) => {
   return (
     <View style={styles.body}>
       <Header />
-      <View style={styles.container}>
-        <Text>Inscription</Text>
+      <View style={styles.blueContainer}>
+      <View style={styles.ecart}>
+            <Text style={styles.blueTitre}>Inscription</Text>
 
         <TextInput
           placeholder="E-Mail"
           keyboardType="email-address"
-          style={{ padding: 10 }}
+          style={[styles.TextInput, { padding: 10 }]}
+          placeholderTextColor={styles.TextInput.color}
           onChangeText={setEmail}
         />
 
         <TextInput
           placeholder="Prénom"
-          style={{ padding: 10 }}
+          style={[styles.TextInput, { padding: 10 }]}
+          placeholderTextColor={styles.TextInput.color}
           onChangeText={setPrenom}
         />
 
         <TextInput
           placeholder="Nom"
-          style={{ padding: 10 }}
+          style={[styles.TextInput, { padding: 10 }]}
+          placeholderTextColor={styles.TextInput.color}
           onChangeText={setNom}
         />
 
         <TextInput
           placeholder="Mot de passe"
-          style={{ padding: 10 }}
+          secureTextEntry={true}
+          style={[styles.TextInput, { padding: 10 }]}
+          placeholderTextColor={styles.TextInput.color}
           onChangeText={setMdp}
         />
 
-        <Button
+        <TouchableOpacity
           title="Inscription"
+          style={styles.petitBouton}
           onPress={() => {
             inscrire();
-          }}
-        />
+          }}>
+            <Text style={styles.texteBouton}>Inscription</Text>
+          </TouchableOpacity>
 
-        <Button
+        <TouchableOpacity
           title="Connexion"
+          style={styles.petitBouton}
           onPress={() => {
             navigation.navigate("Connexion");
-            // console.log(email, mdp);
-          }}
-        />
+          }}>
+            <Text style={styles.texteBouton}>Se connecter</Text>
+          </TouchableOpacity>
 
         {chargement && <Text>Chargement...</Text>}
         <Text>{message}</Text>
+        </View>
       </View>
     </View>
   );
