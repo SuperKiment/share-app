@@ -13,8 +13,6 @@ export default ({ navigation }) => {
     const [contentSujet, setContentSujet] = useState("");
     const [titleSujet, setTitleSujet] = useState("");
 
-    console.log(token);
-
     const addSujet = async () => {
       if (contentSujet != "" && titleSujet != "") {
         let idProprietaire = user["id"];
@@ -37,12 +35,10 @@ export default ({ navigation }) => {
           }),
         })
           .then(function (response) {
-            console.log(response);
             navigation.goBack();
             return response.json();
           })
           .catch((error) => {
-            console.log(error);
             alert(error);
           });
       } else {

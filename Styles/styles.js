@@ -362,9 +362,9 @@ const styles = StyleSheet.create({
 
   boutonAdd: {
     backgroundColor: "#158CBA",
-    padding: 16,
+    padding: 10,
     borderRadius: 25,
-    margin: 10,
+    marginRight: 20,
   },
 });
 

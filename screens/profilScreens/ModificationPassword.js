@@ -13,7 +13,7 @@ export const ModificationMotDePasse = ({ navigation }) => {
   const id = user.id;
   const token = user.token;
 
-  const updatePassword =  async () => {
+  const updatePassword = async () => {
     if (newPassword === confirmNewPassword) {
       if (id !== "") {
         const response = await fetch(nuage + "api/users/" + id, {
@@ -29,7 +29,7 @@ export const ModificationMotDePasse = ({ navigation }) => {
         });
 
         if (response.ok) {
-          console.log("Mot de passe mis à jour avec succès");
+          // console.log("Mot de passe mis à jour avec succès");
           navigation.goBack();
         } else {
           console.error(
@@ -39,7 +39,7 @@ export const ModificationMotDePasse = ({ navigation }) => {
           );
         }
       } else {
-        console.log("Pas d'ID utilisateur");
+        // console.log("Pas d'ID utilisateur");
       }
     } else {
       alert("Les nouveaux mots de passe ne correspondent pas");

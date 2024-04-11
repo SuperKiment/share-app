@@ -6,8 +6,6 @@ import { useUser } from "../../components/UserConnexion.js";
 // import { compare } from "react-native-bcrypt";
 import { nuage } from "../../config/config.js";
 
-console.log(nuage);
-
 export default ({ navigation }) => {
   [email, setEmail] = useState("");
   [mdp, setMdp] = useState("");
