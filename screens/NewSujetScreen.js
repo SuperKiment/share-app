@@ -13,6 +13,8 @@ export default ({ navigation }) => {
     const [contentSujet, setContentSujet] = useState("");
     const [titleSujet, setTitleSujet] = useState("");
 
+    console.log(token);
+
     const addSujet = async () => {
       if (contentSujet != "" && titleSujet != "") {
         let idProprietaire = user["id"];

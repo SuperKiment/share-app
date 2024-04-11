@@ -63,7 +63,7 @@ export default ({ navigation }) => {
       if (dataJSON.message != undefined) setMessage(dataJSON.message);
 
       if (dataJSON.code == undefined && dataJSON.data != undefined) {
-        updateUser({ ...dataJSON.data, email: email });
+        updateUser({ ...dataJSON.data, email: email, token: dataJSON.token});
       }
     } catch (e) {
       console.log(e);

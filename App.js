@@ -22,6 +22,7 @@ import InscriptionScreen from "./screens/connexionScreens/InscriptionScreen";
 import ForumScreen from "./screens/ForumScreen";
 import MessageScreen from "./screens/MessageScreen";
 import NewSujetScreen from "./screens/NewSujetScreen";
+import ModifierMessageScreen from "./screens/ModifierMessageScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -163,6 +164,11 @@ export default function App() {
           <Stack.Screen
             name="Sujet"
             component={MessageScreen}
+            options={{ headerShown: true }}
+          />
+          <Stack.Screen
+            name="ModifierMessage"
+            component={ModifierMessageScreen}
             options={{ headerShown: true }}
           />
           <Stack.Screen
