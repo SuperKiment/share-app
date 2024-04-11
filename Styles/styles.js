@@ -79,11 +79,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#158CBA",
     padding: 16,
     borderRadius: 25,
-    marginTop: 40,
+    marginTop: 20,
   },
   texteBouton: {
     color: "white",
-    fontSize: 35,
+    fontSize: 22,
     fontWeight: "bold",
     textAlign: "center",
   },
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: 150,
+    marginTop: 50,
   },
   row: {
     flexDirection: "row",

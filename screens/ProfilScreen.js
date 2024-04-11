@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import { Profil } from "./profilScreens/ProfilScreen";
 import { Modification } from "./profilScreens/ModificationScreen";
+import { ModificationMotDePasse } from "./profilScreens/ModificationPassword";
 import AboutScreen from "../screens/AboutScreen";
 import MentionsLegalesScreen from "../screens/MentionsLegalesScreen";
 
@@ -30,6 +31,11 @@ export default () => {
         <Stack.Screen
           name="Modification"
           component={Modification}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ModificationMDP"
+          component={ModificationMotDePasse}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

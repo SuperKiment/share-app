@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import styles from "../../Styles/styles";
 import Header from "../../components/Header";
@@ -10,8 +10,10 @@ export const Profil = ({ navigation }) => {
   [firstname, setFirstname] = useState(user != null ? user.firstname : "");
   [lastname, setLastname] = useState(user != null ? user.lastname : "");
   const id = user != null ? user.id : 0;
+  // const nbrFichiers = user.fichiers.length
+  // console.log(user);
 
-  console.log(user);
+  useEffect(() => {}, []);
 
   const deconnexion = () => {
     updateUser(null);
@@ -22,7 +24,7 @@ export const Profil = ({ navigation }) => {
       <>
         <Text style={styles.blueTitre}>Profil</Text>
         <Text style={styles.ProfilTexte}>
-          <Text style={styles.gras}>Nom : {user.nom}</Text>
+          <Text style={styles.gras}>Nom : </Text> {user.nom}
         </Text>
         <Text style={styles.ProfilTexte}>
           <Text style={styles.gras}>Prénom :</Text> {user.prenom}
@@ -31,7 +33,7 @@ export const Profil = ({ navigation }) => {
           <Text style={styles.gras}>Email :</Text> {user.email}
         </Text>
         <Text style={styles.ProfilTexte}>
-          <Text style={styles.gras}>Fichiers partagés :</Text> 45
+          <Text style={styles.gras}>Fichiers partagés :</Text> 123
         </Text>
         <TouchableOpacity onPress={deconnexion} style={styles.bouton}>
           <Text style={styles.texteBouton}>Déconnexion</Text>
@@ -44,6 +46,15 @@ export const Profil = ({ navigation }) => {
           style={styles.bouton}
         >
           <Text style={styles.texteBouton}>Modifier le profil</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("ModificationMDP");
+          }}
+          style={styles.bouton}
+        >
+          <Text style={styles.texteBouton}>Modifier le mot de passe</Text>
         </TouchableOpacity>
 
         <View style={styles.footer}>

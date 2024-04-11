@@ -9,39 +9,52 @@ export const Modification = ({ navigation }) => {
   const AfficherModif = () => {
     const { user, updateUser } = useUser();
     [variable, setVariable] = useState(0);
-    [firstname, setFirstname] = useState(user != null ? user.firstname : "");
-    [lastname, setLastname] = useState(user != null ? user.lastname : "");
+    [firstname, setFirstname] = useState(user.prenom);
+    [lastname, setLastname] = useState(user.nom);
     const id = user != null ? user.id : 0;
+    const token = user.token;
+    
 
     const updateProfil = async () => {
-      try {
-        if (id != "") {
-          const data = await fetch(
-            nuage + "api-updateuser?id=" +
-              id +
-              "&firstname=" +
-              firstname +
-              "&lastname=" +
-              lastname
-          );
-          const dataJSON = await data.json();
-
-          console.log(dataJSON);
-
-          if (dataJSON.state == "success") {
-            updateUser(JSON.parse(dataJSON.data));
-            console.log("User profile updated successfully");
-            navigation.goBack();
-          } else {
-            console.error("Failed to update user profile");
-          }
+      if (id !== "" ) {
+        if(firstname !== "" && lastname !== "" ){
+        const response = await fetch(nuage + "api/users/" + id, {
+          method: "PATCH",
+          headers: {
+            Accept: "application/ld+json",
+            "Content-Type": "application/merge-patch+json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            firstname: firstname,
+            lastname: lastname
+          }),
+        });
+    
+        if (response.ok) {
+          const updatedUserData  = await response.json();
+          const updatedUser = {
+            email: updatedUserData.email,
+            id: updatedUserData.id,
+            nom: updatedUserData.lastname,
+            prenom: updatedUserData.firstname,
+            roles: updatedUserData.roles,
+            token: user.token
+          };
+          updateUser(updatedUser); 
+          console.log("Profil utilisateur mis à jour avec succès");
+          navigation.goBack();
         } else {
-          console.log("pas d'id");
+          console.error("Échec de la mise à jour du profil utilisateur :", response.status, response.statusText);
         }
-      } catch (e) {
-        console.log(e);
+      }else{
+        alert("Votre nom ou prénom ne peut pas être vide");
+      }
+      } else {
+        console.log("Pas d'ID utilisateur");
       }
     };
+   
 
     return (
       <>
