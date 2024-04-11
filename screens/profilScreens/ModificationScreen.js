@@ -13,6 +13,7 @@ export const Modification = ({ navigation }) => {
     [lastname, setLastname] = useState(user.nom);
     const id = user != null ? user.id : 0;
     const token = user.token;
+    
 
     const updateProfil = async () => {
       if (id !== "") {
