@@ -31,6 +31,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#158CBA",
     paddingVertical: 10,
     alignItems: "center",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
   },
   headerText: {
     color: "white",
@@ -69,6 +72,7 @@ const styles = StyleSheet.create({
     marginBottom: 25,
     borderRadius: 10,
   },
+
   gras: {
     fontWeight: "bold",
   },

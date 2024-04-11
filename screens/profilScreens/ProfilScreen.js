@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import styles from "../../Styles/styles";
 import Header from "../../components/Header";
 import { useUser } from "../../components/UserConnexion";
+import { nuage } from "../../config/config";
 
 export const Profil = ({ navigation }) => {
   const { user, updateUser } = useUser();
@@ -10,10 +11,19 @@ export const Profil = ({ navigation }) => {
   [firstname, setFirstname] = useState(user != null ? user.firstname : "");
   [lastname, setLastname] = useState(user != null ? user.lastname : "");
   const id = user != null ? user.id : 0;
-  // const nbrFichiers = user.fichiers.length
-  // console.log(user);
+  const [fichiers, setFichiers] = useState([]);
+  const getFichiersById = async () => {
+    const data = await fetch(nuage + "api/fichiers?proprietaire=" + user.id);
 
-  useEffect(() => {}, []);
+    const dataJSON = await data.json();
+    if (dataJSON["hydra:totalItems"] > 0) {
+      setFichiers(dataJSON["hydra:member"]);
+    }
+  };
+
+  useEffect(() => {
+    getFichiersById();
+  }, []);
 
   const deconnexion = () => {
     updateUser(null);
@@ -33,7 +43,7 @@ export const Profil = ({ navigation }) => {
           <Text style={styles.gras}>Email :</Text> {user.email}
         </Text>
         <Text style={styles.ProfilTexte}>
-          <Text style={styles.gras}>Fichiers partagés :</Text> 123
+          <Text style={styles.gras}>Fichiers partagés :</Text> {fichiers.length}
         </Text>
         <TouchableOpacity onPress={deconnexion} style={styles.bouton}>
           <Text style={styles.texteBouton}>Déconnexion</Text>

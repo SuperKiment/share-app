@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text, Button, TextInput } from "react-native";
+import { View, Text, Button, TextInput, Image } from "react-native";
 import Header from "../../components/Header.js";
 import styles from "../../Styles/styles.js";
 import { useUser } from "../../components/UserConnexion.js";
@@ -61,7 +61,7 @@ export default ({ navigation }) => {
       if (dataJSON.message != undefined) setMessage(dataJSON.message);
 
       if (dataJSON.code == undefined && dataJSON.data != undefined) {
-        updateUser({ ...dataJSON.data, email: email, token: dataJSON.token});
+        updateUser({ ...dataJSON.data, email: email, token: dataJSON.token });
       }
     } catch (e) {
       console.log(e);

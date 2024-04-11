@@ -17,7 +17,7 @@ export default ({ route, navigation }) => {
   const [messages, setMessages] = useState([]);
   const [loadingM, setLoadingM] = useState(true);
   const [loadingS, setLoadingS] = useState(true);
-  const { user } = useContext(UserContext);
+  const { user, token } = useContext(UserContext);
 
   useEffect(() => {
     getSujet(idSujet);
@@ -34,11 +34,96 @@ export default ({ route, navigation }) => {
   const getMessagesBySujet = async (idSujet) => {
     const data = await fetch(nuage + "api/messages?parent=" + idSujet);
     const dataJSON = await data.json();
-    if (dataJSON["hydra:totalItems"] > 0) {
-      setMessages(dataJSON["hydra:member"]);
-      // console.log(dataJSON["hydra:member"][0].user["@id"]);
-      // console.log(IRInuage + "api/users/" + user.id);
-      setLoadingM(false);
+    // if (dataJSON["hydra:totalItems"] > 0) {
+    setMessages(dataJSON["hydra:member"]);
+    console.log(dataJSON["hydra:member"]);
+    // console.log(dataJSON["hydra:member"][0].user["@id"]);
+    // console.log(IRInuage + "api/users/" + user.id);
+    setLoadingM(false);
+    // }
+  };
+
+  const BoutonsModifierSupprimer = ({ message }) => {
+    return (
+      <View style={{ flexDirection: "row" }}>
+        <TouchableOpacity
+          title="Modifier"
+          onPress={() => {
+            navigation.navigate("ModifierMessage", {
+              message: message,
+            });
+          }}
+        >
+          <Image
+            source={{
+              uri: "https://cdn-icons-png.flaticon.com/512/1250/1250925.png",
+            }}
+            style={{
+              tintColor: "white",
+              width: 25,
+              height: 25,
+              margin: 5,
+            }}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          title="Modifier"
+          onPress={() => {
+            SupprimerMessage(message);
+          }}
+        >
+          <Image
+            source={{
+              uri: "https://cdn-icons-png.flaticon.com/512/484/484611.png",
+            }}
+            style={{
+              tintColor: "white",
+              width: 25,
+              height: 25,
+              margin: 5,
+            }}
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  const SupprimerMessage = async (messageSupp) => {
+    console.log("Suppression de", messageSupp);
+    try {
+      const data = await fetch(nuage + "api/messages/" + messageSupp.id, {
+        headers: {
+          Accept: "application/ld+json",
+          "Content-Type": "application/merge-patch+json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        method: "DELETE",
+        body: JSON.stringify({
+          id: messageSupp.id,
+        }),
+      });
+
+      const dataJSON = await data.text();
+      console.log(dataJSON);
+
+      if (dataJSON["@type"] == "hydra:Error") {
+        alert(dataJSON["@type"] + dataJSON.detail);
+      }
+
+      if (dataJSON["@type"] == "Message") {
+        alert("Succès !");
+      }
+
+      if (messageSupp == sujet) {
+        navigation.goBack();
+      } else {
+        getSujet(idSujet);
+        getMessagesBySujet(idSujet);
+        console.log("aaaaaaaaaaaaaa");
+      }
+    } catch (e) {
+      alert(e);
     }
   };
 
@@ -63,10 +148,19 @@ export default ({ route, navigation }) => {
               })}
             </Text>
             <Text style={styles.sujetElement}>
-              Par{" "}
-              {sujet.user
-                ? sujet.user.lastname + " " + sujet.user.firstname
-                : ""}
+              {sujet.user["@id"] == IRInuage + "api/users/" + user.id ? (
+                <>
+                  <View>
+                    <Text style={styles.messageElement}>Par vous</Text>
+
+                    <BoutonsModifierSupprimer message={sujet} />
+                  </View>
+                </>
+              ) : (
+                <>
+                  Par {sujet.user.lastname} {sujet.user.firstname}
+                </>
+              )}
             </Text>
           </View>
 
@@ -89,14 +183,7 @@ export default ({ route, navigation }) => {
                         <>
                           <View>
                             <Text style={styles.messageElement}>Par vous</Text>
-                            <Button
-                              title="Modifier"
-                              onPress={() => {
-                                navigation.navigate("ModifierMessage", {
-                                  message: message,
-                                });
-                              }}
-                            />
+                            <BoutonsModifierSupprimer message={message} />
                           </View>
                         </>
                       ) : (

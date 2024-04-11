@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text, Button, TextInput } from "react-native";
+import { View, Text, Button, TextInput, Image } from "react-native";
 import Header from "../../components/Header.js";
 import styles from "../../Styles/styles.js";
 import { useUser } from "../../components/UserConnexion.js";
@@ -52,14 +52,14 @@ export default ({ navigation }) => {
     });
 
     // console.log("fecth ok");
-    
+
     try {
       const dataJSON = await data.json();
       // console.log(dataJSON);
       setMessage(await dataJSON["hydra:title"]);
 
-      if (await dataJSON["hydra:title"] == "success") {
-        navigation.navigate("Connexion")
+      if ((await dataJSON["hydra:title"]) == "success") {
+        navigation.navigate("Connexion");
       }
     } catch (e) {
       // console.log(e);
