@@ -57,13 +57,13 @@ export default ({ route, navigation }) => {
   };
 
   const downloadAndSaveFile = () => {
-    const downloadUrl = nuage + "uploads/fichiers/" + fichier.nomServeur;
+    const downloadUrl = nuage + "api-downloadfichier?fileName=" + fichier.nomServeur;
     const destinationUri = FileSystem.cacheDirectory + fichier.nomServeur;
 
     FileSystem.downloadAsync(downloadUrl, destinationUri)
     .then(({ status, uri }) => {
       if (status === 404) {
-        throw new Error('Fichier inexistant sur le serveru');
+        throw new Error('Fichier inexistant sur le serveur');
       }
       setDownloaded(true);
       console.log(uri)
