@@ -13,7 +13,8 @@ import styles from "../Styles/styles";
 import Header from "../components/Header";
 import { useUser } from "../components/UserConnexion";
 import { Picker } from "@react-native-picker/picker";
-import { nuage } from "../config/config";
+import { IRInuage, nuage } from "../config/config";
+import * as DocumentPicker from 'expo-document-picker';
 
 export default ({ navigation }) => {
   const itemDimension = (Dimensions.get("window").width - 60) / 3 - 20;
@@ -22,6 +23,7 @@ export default ({ navigation }) => {
   const [fichiersShared, setFichiersShared] = useState([]);
   const { user } = useUser();
   const [loading, setLoading] = useState(true);
+  const [fileToUpload, setFileToUpload] = useState(null);
 
   useEffect(() => {
     getFichiersById();
@@ -46,6 +48,38 @@ export default ({ navigation }) => {
       setFichiersShared(dataJSON["hydra:member"]);
     }
   };
+
+  const chooseFile = async () => {
+    let result = await DocumentPicker.getDocumentAsync({});
+      console.log(result.assets[0].name);
+      setFileToUpload(result);
+  }
+
+  const uploadFile = async () => {
+
+    const url = nuage + "api/fichiers";
+    const data = await fetch(url, {
+      method: "POST",
+      body: JSON.stringify({
+        nomOriginal:  fileToUpload.assets[0].name,
+        nomServeur: "server_test_file_name",
+        dateEnvoi: new Date().toISOString(),
+        extension: fileToUpload.assets[0].name.split('.').pop(),
+        taille: fileToUpload.assets[0].size,
+        proprietaire: IRInuage + "api/users/" + user.id, 
+        //"categories": [
+        //  "https://example.com/"
+        //],
+      }),
+      headers: {
+        "Content-type": "application/ld+json",
+      },
+    });
+
+    const dataJSON = await data.json();
+
+    console.log(dataJSON)
+  }
 
   return (
     <View style={styles.body}>
@@ -184,6 +218,21 @@ export default ({ navigation }) => {
                   <Text>Pas de fichier partagé avec vous</Text>
                 </View>
               ))}
+              {selectedValue === "Upload" && (
+                <TouchableOpacity style={styles.petitBouton} onPress={chooseFile}>
+                  <Text style={styles.textePetitBouton}>Sélectionner un fichier</Text>
+                </TouchableOpacity>
+              )}
+              {selectedValue === "Upload" && fileToUpload && (
+                <View>
+                  <Text style={styles.itemCodeFichier}>
+                    {fileToUpload.assets[0].name}
+                  </Text>
+                  <TouchableOpacity style={styles.petitBouton} onPress={uploadFile}>
+                      <Text style={styles.textePetitBouton}>Upload le fichier</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
           </>
         )}
       </View>
