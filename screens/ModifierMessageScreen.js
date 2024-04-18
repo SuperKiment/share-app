@@ -29,7 +29,6 @@ export default ({ route, navigation }) => {
         });
 
         const dataJSON = await data.json();
-        console.log(dataJSON);
 
         if (dataJSON["@type"] == "hydra:Error") {
           alert(dataJSON["@type"] + dataJSON.detail);

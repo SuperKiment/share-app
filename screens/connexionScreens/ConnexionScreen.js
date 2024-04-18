@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text, Button, TextInput, Image } from "react-native";
+import { View, Text, Button, TextInput, Image, TouchableOpacity } from "react-native";
 import Header from "../../components/Header.js";
 import styles from "../../Styles/styles.js";
 import { useUser } from "../../components/UserConnexion.js";
@@ -31,7 +31,6 @@ export default ({ navigation }) => {
 
       const dataJSON = await data.text();
 
-      console.log(dataJSON);
     } catch (e) {
       console.log(e);
     }
@@ -42,7 +41,6 @@ export default ({ navigation }) => {
 
     try {
       const url = nuage + "api/authentication_token";
-      console.log(url);
       const data = await fetch(url, {
         method: "POST",
         body: JSON.stringify({
@@ -55,8 +53,6 @@ export default ({ navigation }) => {
       });
 
       const dataJSON = await data.json();
-
-      console.log("data : ", dataJSON);
 
       if (dataJSON.message != undefined) setMessage(dataJSON.message);
 
@@ -82,52 +78,45 @@ export default ({ navigation }) => {
   return (
     <View style={styles.body}>
       <Header />
-      <View style={styles.container}>
-        <Text>Connexion</Text>
+      <View style={styles.blueContainer}>
+      <View style={styles.ecart}>
+            <Text style={styles.blueTitre}>Connexion</Text>
 
         <TextInput
           placeholder="E-Mail"
-          keyboardType="email-address"
-          style={{ padding: 10 }}
+          style={[styles.TextInput, { padding: 10 }]}
+          placeholderTextColor={styles.TextInput.color}
           onChangeText={setEmail}
         />
         <TextInput
           placeholder="Mot de passe"
-          style={{ padding: 10 }}
+          secureTextEntry={true}
+          style={[styles.TextInput, { padding: 10 }]}
+          placeholderTextColor={styles.TextInput.color}
           onChangeText={setMdp}
         />
 
-        <Button
+        <TouchableOpacity
           title="Connexion"
+          style={styles.petitBouton}
           onPress={() => {
             verifyUser();
-            // console.log(email, mdp);
-          }}
-        />
+          }}>
+          <Text style={styles.texteBouton}>Connexion</Text>
+        </TouchableOpacity>
 
-        <Button
-          title="Connexion dev"
-          onPress={() => {
-            verifyUserDev();
-          }}
-        />
-
-        <Button
+        <TouchableOpacity
           title="Inscription"
+          style={styles.petitBouton}
           onPress={() => {
             navigation.navigate("Inscription");
-          }}
-        />
-
-        <Button
-          title="Test Token"
-          onPress={() => {
-            testToken();
-          }}
-        />
+          }}>
+          <Text style={styles.texteBouton}>Inscription</Text>
+          </TouchableOpacity>
 
         {chargement && <Text>Chargement...</Text>}
         <Text>{message}</Text>
+      </View>
       </View>
     </View>
   );

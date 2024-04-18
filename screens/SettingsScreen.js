@@ -13,8 +13,6 @@ export default () => {
     );
     const dataJSON = await data.json();
 
-    console.log(dataJSON);
-
     setVariable(dataJSON);
   };
 

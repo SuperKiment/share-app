@@ -36,9 +36,6 @@ export default ({ route, navigation }) => {
     const dataJSON = await data.json();
     // if (dataJSON["hydra:totalItems"] > 0) {
     setMessages(dataJSON["hydra:member"]);
-    console.log(dataJSON["hydra:member"]);
-    // console.log(dataJSON["hydra:member"][0].user["@id"]);
-    // console.log(IRInuage + "api/users/" + user.id);
     setLoadingM(false);
     // }
   };
@@ -90,7 +87,6 @@ export default ({ route, navigation }) => {
   };
 
   const SupprimerMessage = async (messageSupp) => {
-    console.log("Suppression de", messageSupp);
     try {
       const data = await fetch(nuage + "api/messages/" + messageSupp.id, {
         headers: {
@@ -105,7 +101,6 @@ export default ({ route, navigation }) => {
       });
 
       const dataJSON = await data.text();
-      console.log(dataJSON);
 
       if (dataJSON["@type"] == "hydra:Error") {
         alert(dataJSON["@type"] + dataJSON.detail);
@@ -120,7 +115,6 @@ export default ({ route, navigation }) => {
       } else {
         getSujet(idSujet);
         getMessagesBySujet(idSujet);
-        console.log("aaaaaaaaaaaaaa");
       }
     } catch (e) {
       alert(e);
