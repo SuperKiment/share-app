@@ -23,7 +23,7 @@ export default ({ navigation }) => {
   const [fichiersShared, setFichiersShared] = useState([]);
   const { user } = useUser();
   const [loading, setLoading] = useState(true);
-  const [fileToUpload, setFileToUpload] = useState(null);
+  const [fileToUpload, setFileToUpload] = useState(Object);
 
   useEffect(() => {
     getFichiersById();
@@ -52,33 +52,43 @@ export default ({ navigation }) => {
   const chooseFile = async () => {
     let result = await DocumentPicker.getDocumentAsync({});
       console.log(result.assets[0].name);
-      setFileToUpload(result);
+      console.log(result)
+      setFileToUpload(result.assets[0]);
   }
 
   const uploadFile = async () => {
 
     const url = nuage + "api/fichiers";
-    const data = await fetch(url, {
-      method: "POST",
-      body: JSON.stringify({
-        nomOriginal:  fileToUpload.assets[0].name,
-        nomServeur: "server_test_file_name",
-        dateEnvoi: new Date().toISOString(),
-        extension: fileToUpload.assets[0].name.split('.').pop(),
-        taille: fileToUpload.assets[0].size,
-        proprietaire: IRInuage + "api/users/" + user.id, 
-        //"categories": [
-        //  "https://example.com/"
-        //],
-      }),
-      headers: {
-        "Content-type": "application/ld+json",
-      },
+    console.log(url)
+    const formData = new FormData();
+    formData.append('file', {
+      uri: fileToUpload.uri,
+      name: fileToUpload.name,
+      type: fileToUpload.mimeType,
+      size: fileToUpload.size
     });
-
-    const dataJSON = await data.json();
-
-    console.log(dataJSON)
+    formData.append('nomOriginal', fileToUpload.name);
+    formData.append('dateEnvoi', new Date().toISOString());
+    formData.append('extension', fileToUpload.name.slice(-3));
+    formData.append('taille', fileToUpload.size)
+    formData.append('proprietaire', user.id);
+    console.log(formData);
+    fetch(url, {
+      method: 'POST',
+      body: formData,
+    })
+    .then(response => {
+      if (response.ok) {
+        console.log('File uploaded successfully');
+      } else {
+        response.text().then(text => {
+          console.error('Error uploading file. Status:', response.status, 'Response:', text);
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
   }
 
   return (
@@ -226,7 +236,7 @@ export default ({ navigation }) => {
               {selectedValue === "Upload" && fileToUpload && (
                 <View>
                   <Text style={styles.itemCodeFichier}>
-                    {fileToUpload.assets[0].name}
+                    {fileToUpload.name}
                   </Text>
                   <TouchableOpacity style={styles.petitBouton} onPress={uploadFile}>
                       <Text style={styles.textePetitBouton}>Upload le fichier</Text>
