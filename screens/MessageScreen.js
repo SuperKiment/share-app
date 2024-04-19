@@ -40,6 +40,73 @@ export default ({ route, navigation }) => {
     // }
   };
 
+  const BoutonsModifierSupprimerRepondre = ({ message }) => {
+    return (
+      <View style={{ flexDirection: "row" }}>
+        <TouchableOpacity
+          title="Modifier"
+          onPress={() => {
+            navigation.navigate("ModifierMessage", {
+              message: message,
+            });
+          }}
+        >
+          <Image
+            source={{
+              uri: "https://cdn-icons-png.flaticon.com/512/1250/1250925.png",
+            }}
+            style={{
+              tintColor: "white",
+              width: 25,
+              height: 25,
+              margin: 5,
+            }}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          title="Supprimer"
+          onPress={() => {
+            SupprimerMessage(message);
+          }}
+        >
+          <Image
+            source={{
+              uri: "https://cdn-icons-png.flaticon.com/512/484/484611.png",
+            }}
+            style={{
+              tintColor: "white",
+              width: 25,
+              height: 25,
+              margin: 5,
+            }}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          title="Repondre"
+          onPress={() => {
+            navigation.navigate("RepondreMessage", {
+              message: message,
+            });
+          }}
+        >
+          <Image
+            source={{
+              uri: "https://cdn-icons-png.flaticon.com/256/9247/9247304.png",
+            }}
+            style={{
+              tintColor: "white",
+              width: 25,
+              height: 25,
+              margin: 5,
+            }}
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   const BoutonsModifierSupprimer = ({ message }) => {
     return (
       <View style={{ flexDirection: "row" }}>
@@ -65,7 +132,7 @@ export default ({ route, navigation }) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          title="Modifier"
+          title="Supprimer"
           onPress={() => {
             SupprimerMessage(message);
           }}
@@ -82,6 +149,7 @@ export default ({ route, navigation }) => {
             }}
           />
         </TouchableOpacity>
+
       </View>
     );
   };
@@ -147,7 +215,7 @@ export default ({ route, navigation }) => {
                   <View>
                     <Text style={styles.messageElement}>Par vous</Text>
 
-                    <BoutonsModifierSupprimer message={sujet} />
+                    <BoutonsModifierSupprimerRepondre message={sujet} />
                   </View>
                 </>
               ) : (

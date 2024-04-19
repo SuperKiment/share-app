@@ -23,6 +23,7 @@ import ForumScreen from "./screens/ForumScreen";
 import MessageScreen from "./screens/MessageScreen";
 import NewSujetScreen from "./screens/NewSujetScreen";
 import ModifierMessageScreen from "./screens/ModifierMessageScreen";
+import RepondreMessageScreen from "./screens/RepondreMessageScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -169,6 +170,11 @@ export default function App() {
           <Stack.Screen
             name="ModifierMessage"
             component={ModifierMessageScreen}
+            options={{ headerShown: true }}
+          />
+          <Stack.Screen
+            name="RepondreMessage"
+            component={RepondreMessageScreen}
             options={{ headerShown: true }}
           />
           <Stack.Screen
