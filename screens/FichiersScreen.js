@@ -24,6 +24,7 @@ export default ({ navigation }) => {
   const { user } = useUser();
   const [loading, setLoading] = useState(true);
   const [fileToUpload, setFileToUpload] = useState(Object);
+  const [fileUploaded, setFileUploaded] = useState(false);
 
   useEffect(() => {
     getFichiersById();
@@ -80,6 +81,7 @@ export default ({ navigation }) => {
     .then(response => {
       if (response.ok) {
         console.log('File uploaded successfully');
+        setFileUploaded(true);
       } else {
         response.text().then(text => {
           console.error('Error uploading file. Status:', response.status, 'Response:', text);
@@ -103,6 +105,10 @@ export default ({ navigation }) => {
         <Picker
           selectedValue={selectedValue}
           onValueChange={(itemValue, itemIndex) => {
+            getFichiersById();
+            getFichiersShared();
+            setFileToUpload(false);
+            setFileUploaded(false);
             setSelectedValue(itemValue);
           }}
           style={styles.picker}
@@ -241,6 +247,13 @@ export default ({ navigation }) => {
                   <TouchableOpacity style={styles.petitBouton} onPress={uploadFile}>
                       <Text style={styles.textePetitBouton}>Upload le fichier</Text>
                   </TouchableOpacity>
+                </View>
+              )}
+              {selectedValue === "Upload" && fileUploaded && (
+                <View>
+                  <Text style={styles.itemCodeFichier}>
+                    Fichier envoyé !
+                  </Text>
                 </View>
               )}
           </>

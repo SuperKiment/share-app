@@ -154,6 +154,34 @@ export default ({ route, navigation }) => {
     );
   };
 
+  const BoutonRepondre = ({ message }) => {
+    return (
+      <View style={{ flexDirection: "row" }}>
+
+        <TouchableOpacity
+          title="Repondre"
+          onPress={() => {
+            navigation.navigate("RepondreMessage", {
+              message: message,
+            });
+          }}
+        >
+          <Image
+            source={{
+              uri: "https://cdn-icons-png.flaticon.com/256/9247/9247304.png",
+            }}
+            style={{
+              tintColor: "white",
+              width: 25,
+              height: 25,
+              margin: 5,
+            }}
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   const SupprimerMessage = async (messageSupp) => {
     try {
       const data = await fetch(nuage + "api/messages/" + messageSupp.id, {
@@ -220,7 +248,11 @@ export default ({ route, navigation }) => {
                 </>
               ) : (
                 <>
-                  Par {sujet.user.lastname} {sujet.user.firstname}
+                  <View>
+                    <Text style={styles.messageElement}> Par {sujet.user.lastname} {sujet.user.firstname}</Text>
+                   
+                    <BoutonRepondre message={sujet} />
+                  </View>
                 </>
               )}
             </Text>
