@@ -23,6 +23,7 @@ import ForumScreen from "./screens/ForumScreen";
 import MessageScreen from "./screens/MessageScreen";
 import NewSujetScreen from "./screens/NewSujetScreen";
 import ModifierMessageScreen from "./screens/ModifierMessageScreen";
+import ThemeScreen from "./screens/ThemeScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -159,6 +160,11 @@ export default function App() {
           <Stack.Screen
             name="Forum"
             component={ForumScreen}
+            options={{ headerShown: true }}
+          />
+          <Stack.Screen
+            name="Theme"
+            component={ThemeScreen}
             options={{ headerShown: true }}
           />
           <Stack.Screen
