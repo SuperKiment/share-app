@@ -10,7 +10,7 @@ import {
 import styles from "../Styles/styles";
 import Header from "../components/Header";
 
-export default () => {
+export default ({ navigation }) => {
   [variable, setVariable] = useState(0);
 
   return (
@@ -45,7 +45,12 @@ export default () => {
           </Text>{" "}
           de manière sécurisée et efficace.
         </Text>
-        <TouchableOpacity style={styles.bouton}>
+        <TouchableOpacity
+          style={styles.bouton}
+          onPress={() => {
+            navigation.navigate("Fichiers");
+          }}
+        >
           <Text style={styles.texteBouton}>Partager</Text>
         </TouchableOpacity>
       </ScrollView>

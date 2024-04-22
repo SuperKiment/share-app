@@ -3,8 +3,8 @@ import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import styles from "../Styles/styles";
 import Header from "../components/Header";
 import { nuage } from "../config/config";
-import * as FileSystem from 'expo-file-system';
-import * as Sharing from 'expo-sharing';
+import * as FileSystem from "expo-file-system";
+import * as Sharing from "expo-sharing";
 
 function formatDate(dateString) {
   const date = new Date(dateString); // Convertir la chaîne de date en objet Date
@@ -57,21 +57,22 @@ export default ({ route, navigation }) => {
   };
 
   const downloadAndSaveFile = () => {
-    const downloadUrl = nuage + "api-downloadfichier?fileName=" + fichier.nomServeur;
+    const downloadUrl =
+      nuage + "api-downloadfichier?fileName=" + fichier.nomServeur;
     const destinationUri = FileSystem.cacheDirectory + fichier.nomServeur;
 
     FileSystem.downloadAsync(downloadUrl, destinationUri)
-    .then(({ status, uri }) => {
-      if (status === 404) {
-        throw new Error('Fichier inexistant sur le serveur');
-      }
-      setDownloaded(true);
-      console.log(uri)
-      return Sharing.shareAsync(uri);
-    })
-    .catch(error => {
-        console.error('Erreur de téléchargement:', error);
-    });
+      .then(({ status, uri }) => {
+        if (status === 404) {
+          throw new Error("Fichier inexistant sur le serveur");
+        }
+        setDownloaded(true);
+        console.log(uri);
+        return Sharing.shareAsync(uri);
+      })
+      .catch((error) => {
+        console.error("Erreur de téléchargement:", error);
+      });
   };
 
   return (
@@ -174,15 +175,16 @@ export default ({ route, navigation }) => {
             ) : (
               <View></View>
             )}
-          <TouchableOpacity style={styles.petitBouton} onPress={downloadAndSaveFile}>
-            <Text style={styles.textePetitBouton}>Télécharger</Text>
-          </TouchableOpacity>
-          
-          {downloaded && (
-            <Text>
-              Téléchargé!
-            </Text>
-          )}
+            <TouchableOpacity
+              style={styles.petitBouton}
+              onPress={downloadAndSaveFile}
+            >
+              <Text style={styles.textePetitBouton}>Télécharger</Text>
+            </TouchableOpacity>
+
+            {downloaded && (
+              <Text style={styles.itemCodeFichier}>Téléchargé!</Text>
+            )}
           </View>
         </ScrollView>
       )}

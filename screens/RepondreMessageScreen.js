@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  ScrollView,
+} from "react-native";
 import styles from "../Styles/styles";
 import { nuage, IRInuage } from "../config/config";
 import { useUser } from "../components/UserConnexion";
@@ -37,23 +43,25 @@ export default ({ route, navigation }) => {
             messages: [],
           }),
         })
-        .then(function (response) {
-          navigation.goBack();
-          return response.json();
-        })
-        .catch((error) => {
+          .then(function (response) {
+            navigation.goBack();
+            return response.json();
+          })
+          .catch((error) => {
             alert(error);
-        });
+          });
       } else {
-        alert("un ou des champs sont vides");
+        alert("Un ou des champs sont vides !");
       }
     };
 
     return (
       <>
-        <View>
+        <ScrollView>
           <Text style={styles.blueTitre}>Ajout d'une Réponse</Text>
-          <Text style={{ ...styles.gras, ...styles.ProfilTexte }}>Titre de la réponse</Text>
+          <Text style={{ ...styles.gras, ...styles.ProfilTexte }}>
+            Titre de la réponse
+          </Text>
           <TextInput
             defaultValue={titleSujet}
             style={[styles.TextInput, { height: 100 }]}
@@ -70,20 +78,20 @@ export default ({ route, navigation }) => {
             placeholder="Enter text here..."
             multiline
           />
-        </View>
 
-        <TouchableOpacity onPress={addSujet} style={styles.bouton}>
-          <Text style={styles.texteBouton}>Ajouter</Text>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={addSujet} style={styles.bouton}>
+            <Text style={styles.texteBouton}>Ajouter</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => {
-            navigation.goBack();
-          }}
-          style={styles.bouton}
-        >
-          <Text style={styles.texteBouton}>Annuler</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.goBack();
+            }}
+            style={styles.bouton}
+          >
+            <Text style={styles.texteBouton}>Annuler</Text>
+          </TouchableOpacity>
+        </ScrollView>
       </>
     );
   };

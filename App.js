@@ -170,12 +170,12 @@ export default function App() {
           <Stack.Screen
             name="ModifierMessage"
             component={ModifierMessageScreen}
-            options={{ headerShown: true }}
+            options={{ headerShown: true, title: "Modifier le message" }}
           />
           <Stack.Screen
             name="RepondreMessage"
             component={RepondreMessageScreen}
-            options={{ headerShown: true }}
+            options={{ headerShown: true, title: "Répondre à un message" }}
           />
           <Stack.Screen
             name="Mentions Légales"

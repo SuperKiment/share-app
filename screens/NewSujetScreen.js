@@ -42,7 +42,7 @@ export default ({ navigation }) => {
             alert(error);
           });
       } else {
-        alert("un ou des champs sont vides");
+        alert("Un ou des champs sont vides !");
       }
     };
 
