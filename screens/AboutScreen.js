@@ -19,14 +19,14 @@ export default () => {
       title: "Mélanie BOUDRY",
       role: "Etudiante",
       backgroundColor: "#F05C5C",
-      url: "https://s4-8057.nuage-peda.fr/portfolio-mboudry/",
+      url: "https://s4-8111.nuage-peda.fr/portfolio-mboudry/",
     },
     {
       id: 2,
       title: "Agathe POTEAUX",
       role: "Etudiante",
       backgroundColor: "#87C48A",
-      url: "https://s4-8056.nuage-peda.fr/portfolio/AgatheP/",
+      url: "https://s4-8110.nuage-peda.fr/Portfolio/",
     },
     {
       id: 3,

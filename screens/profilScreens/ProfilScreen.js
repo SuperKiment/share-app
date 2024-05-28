@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import styles from "../../Styles/styles";
 import Header from "../../components/Header";
 import { useUser } from "../../components/UserConnexion";
@@ -104,11 +104,13 @@ export const Profil = ({ navigation }) => {
   return (
     <View style={styles.body}>
       <Header />
+      <ScrollView>
       <View style={styles.blueContainer}>
         <View style={styles.ecart}>
           <AfficherProfil />
         </View>
       </View>
+      </ScrollView>
     </View>
   );
 };
