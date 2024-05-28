@@ -35,4 +35,3 @@ yarn-error.*
 *.tsbuildinfo
 
 # Le lien vers l'api
-config/config.js
